@@ -11,7 +11,9 @@ class Login extends Component {
 
     login = () => {
         const user = {email: this.state.email, password: this.state.password};
-        fetch("http://localhost:8080/api/login/login", {
+        var host = 'http://localhost:8080/';
+        host = 'https://intense-refuge-49089.herokuapp.com/';
+        fetch(host + "api/login/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(user)
@@ -35,7 +37,9 @@ class Login extends Component {
             <div id="login">
                 <h3 className="text-center text-white pt-5">Login form</h3>
                 <div className="container">
-                    {JSON.stringify(this.state.userData)}
+                    Profile: {JSON.stringify(this.state.userData)}
+                     <br></br>
+                    Type in admin/admin:
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">

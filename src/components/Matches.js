@@ -14,8 +14,10 @@ class Matches extends Component {
     }
 
     onDelClick = (id) => {
+    var host = 'http://localhost:8080/';
+    host = 'https://intense-refuge-49089.herokuapp.com/';
         if (window.confirm('Are you sure to delete match?')) {
-            fetch('http://localhost:8080/api/dummymatches/delete-match' + id, {
+            fetch(host + 'api/dummymatches/delete-match' + id, {
                 method: 'DELETE',
             }).then(res => this.fetchMatches())
                 .catch(err => console.error(err));
@@ -23,7 +25,9 @@ class Matches extends Component {
     };
 
     addMatch(match) {
-        fetch('http://localhost:8080/api/dummymatches/add-match', {
+        var host = 'http://localhost:8080/';
+        host = 'https://intense-refuge-49089.herokuapp.com/';
+        fetch(host + 'api/dummymatches/add-match', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +39,9 @@ class Matches extends Component {
     }
 
     updateMatch(match) {
-        fetch('http://localhost:8080/api/dummymatches/update-match', {
+        var host = 'http://localhost:8080/';
+        host = 'https://intense-refuge-49089.herokuapp.com/';
+        fetch(host + 'api/dummymatches/update-match', {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +105,9 @@ class Matches extends Component {
     }
 
     fetchMatches = () => {
-        fetch('http://localhost:8080/api/dummymatches/get-dummy-matches',
+        var host = 'http://localhost:8080/';
+        host = 'https://intense-refuge-49089.herokuapp.com/';
+        fetch(host + 'api/dummymatches/get-dummy-matches',
         )
             .then((response) => response.json())
             .then((responseData) => {
