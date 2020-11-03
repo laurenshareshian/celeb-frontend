@@ -7,9 +7,10 @@
     "react": "^16.8.6",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^16.8.6",
+    "react-native": "^0.63.3",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.0.1",
     "react-skylight": "^0.5.1",
-    "react-router-dom": "^5.2.0",
     "react-table": "^6.10.0"
   },
   "scripts": {
