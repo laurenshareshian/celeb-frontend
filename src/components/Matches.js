@@ -6,6 +6,8 @@ import AddMatch from './AddMatch';
 class Matches extends Component {
     constructor(props) {
         super(props);
+        //this.host = 'http://localhost:8080/';
+        this.host = 'https://intense-refuge-49089.herokuapp.com/';
         this.state = {matches: []};
     }
 
@@ -14,10 +16,8 @@ class Matches extends Component {
     }
 
     onDelClick = (id) => {
-    var host = 'http://localhost:8080/';
-    host = 'https://intense-refuge-49089.herokuapp.com/';
         if (window.confirm('Are you sure to delete match?')) {
-            fetch(host + 'api/dummymatches/delete-match' + id, {
+            fetch(this.host + 'api/dummymatches/delete-match' + id, {
                 method: 'DELETE',
             }).then(res => this.fetchMatches())
                 .catch(err => console.error(err));
@@ -25,9 +25,7 @@ class Matches extends Component {
     };
 
     addMatch(match) {
-        var host = 'http://localhost:8080/';
-        host = 'https://intense-refuge-49089.herokuapp.com/';
-        fetch(host + 'api/dummymatches/add-match', {
+        fetch(this.host + 'api/dummymatches/add-match', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -39,9 +37,7 @@ class Matches extends Component {
     }
 
     updateMatch(match) {
-        var host = 'http://localhost:8080/';
-        host = 'https://intense-refuge-49089.herokuapp.com/';
-        fetch(host + 'api/dummymatches/update-match', {
+        fetch(this.host + 'api/dummymatches/update-match', {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -98,6 +94,7 @@ class Matches extends Component {
 
         return (
             <div>
+                <h1>Matches</h1>
                 <AddMatch addMatch={this.addMatch} fetchMatches={this.fetchMatches}/>
                 <ReactTable data={this.state.matches} columns={columns} filterable={true}/>
             </div>
@@ -105,10 +102,7 @@ class Matches extends Component {
     }
 
     fetchMatches = () => {
-        var host = 'http://localhost:8080/';
-        host = 'https://intense-refuge-49089.herokuapp.com/';
-        fetch(host + 'api/dummymatches/get-dummy-matches',
-        )
+        fetch(this.host + 'api/dummymatches/get-dummy-matches')
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
