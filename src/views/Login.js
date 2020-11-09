@@ -21,11 +21,7 @@ class Login extends Component {
             .then(response => response.json())
             .then(jsonResponse => {
                 this.setState({
-                    userData: jsonResponse
-                })
-            })
-            .then(()=>{
-                this.setState({
+                    userData: jsonResponse,
                     loggedIn: true
                 })
             })
@@ -44,7 +40,7 @@ class Login extends Component {
                 to={{
                     pathname: '/user',
                     state: {
-                        userdata: data
+                        userData: data
                     }
                 }}
             />)
