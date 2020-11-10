@@ -1,6 +1,6 @@
 import useSwr from 'swr'
 
-const baseUrl = 'http://intense-refuge-49089.herokuapp.com';
+const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
 
 export const useRequest = (path, identifier) => {
     if (!path) {
