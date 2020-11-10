@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 import MemberInfo from "./MemberInfo"
+import Preferences from './Preferences';
 import {Relationships} from "../Constants";
 
 
@@ -21,9 +22,19 @@ function ListRelationship({selectedRelationship, userData}) {
 }
 
 function PresentOptions({userData, handleClick}) {
+
     return (
         <div>
             <MemberInfo userData={userData}/>
+
+            <br/>
+
+            <button
+                className="btn btn-info btn-md"
+                name="Preferences"
+                onClick={handleClick}>
+                Manage Dating Preferences
+            </button>
 
             <br/>
 
@@ -58,7 +69,7 @@ function PresentOptions({userData, handleClick}) {
 class UserHome extends Component {
     constructor(props) {
         super(props);
-        this.userData = props.location.state.userData;
+        this.userData = props.userData || props.location.state.userData;
         this.state = {
             relationshipSelected: false,
             selectedRelationship: null
@@ -77,9 +88,11 @@ class UserHome extends Component {
         )
     }
 
-
     render() {
         const relationshipIsSelected = this.state.relationshipSelected;
+        if (this.state.selectedRelationship === 'Preferences') {
+            return <Preferences userData={this.userData} />
+        }
         if (!relationshipIsSelected) {
             return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
         }

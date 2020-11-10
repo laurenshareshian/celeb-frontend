@@ -63,8 +63,8 @@ class SignUp extends Component {
                         <input
                             type="radio"
                             name="gender"
-                            value="male"
-                            checked={this.state.gender === "male"}
+                            value="M"
+                            checked={this.state.gender === "M"}
                             onChange={this.handleChange}
                         /> Male
                     </label>
@@ -75,8 +75,8 @@ class SignUp extends Component {
                         <input
                             type="radio"
                             name="gender"
-                            value="female"
-                            checked={this.state.gender === "female"}
+                            value="F"
+                            checked={this.state.gender === "F"}
                             onChange={this.handleChange}
                         /> Female
                     </label>
