@@ -4,21 +4,32 @@ import UserHome from './UserHome';
 import {Redirect} from "react-router-dom";
 
 
-class Preferences extends Component {
+class Profile extends Component {
     constructor(props) {
-        console.log('props: ', props);
         super(props);
+        console.log(props);
         this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        // this.host = 'http://localhost:8080/';
-        this.state = {ageMin: '', ageMax: '', gender: '',
-        fkProfileId: props.userData.profileId, routeToUserHome: false};
+//         this.host = 'http://localhost:8080/';
+        this.state = {
+        profileId: props.userData.profileId,
+        firstName: props.userData.firstName,
+        lastName: props.userData.lastName,
+        age: props.userData.age,
+        gender: props.userData.gender,
+        celebStatus: props.userData.celebStatus,
+        bio: props.userData.bio,
+        fkEmailId: props.userData.fkEmailId,
+        routeToUserHome: false};
     }
 
-    editPreferences = () => {
+    editProfile = () => {
         const preferences = {
-        ageMin: this.state.ageMin, ageMax: this.state.ageMax,
-        gender: this.state.gender, fkProfileId: this.state.fkProfileId};
-        fetch(this.host + "/api/preferences/update-preferences/" + this.state.fkProfileId, {
+        profileId: this.state.profileId,
+        firstName: this.state.firstName, lastName: this.state.lastName,
+        gender: this.state.gender, age: this.state.age,
+        celebStatus: this.state.celebStatus, bio: this.state.bio,
+        fkEmailId: this.state.emailId};
+        fetch(this.host + "/api/profile/update-profiles/" + this.state.profileId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(preferences)
@@ -41,17 +52,29 @@ class Preferences extends Component {
                 <h3 className="text-center text-white pt-5">Preferences form</h3>
                 <div className="container">
                     <br/>
-                    <h1>Who are you interested in?</h1>
+                    <h1>Update your profile:</h1>
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">
                                 <div className="form-group">
-                                    <input type="text" name="ageMin" onChange={this.handleChange}
-                                           className="form-control" placeholder="minimum age"/>
+                                    <input type="text" name="firstName" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.firstName}/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="ageMax" name="ageMax" onChange={this.handleChange}
-                                           className="form-control" placeholder="maximum age"/>
+                                    <input type="text" name="lastName" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.lastName}/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="age" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.age}/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="celebStatus" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.celebStatus}/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="bio" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.bio}/>
                                 </div>
                                 <div className="form-group">
                                     <label className="pr-sm-2">
@@ -77,7 +100,7 @@ class Preferences extends Component {
 
                                     <br/>
                                 </div>
-                                <input type="submit" name="submit" onClick={this.editPreferences} className="btn btn-info btn-md"
+                                <input type="submit" name="submit" onClick={this.editProfile} className="btn btn-info btn-md"
                                        value="Submit"/>
                             </div>
                         </div>
@@ -89,4 +112,4 @@ class Preferences extends Component {
     }
 }
 
-export default Preferences;
+export default Profile;

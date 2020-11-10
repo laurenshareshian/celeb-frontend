@@ -8,3 +8,14 @@
   padding: 55px;
   color: cornsilk;
 }
+
+.Footer {
+  background-color: rgba(169, 67, 63, 0.71);
+  height: 50px;
+  padding: 15px;
+  color: cornsilk;
+  position:absolute;
+  left:0;
+  bottom:0;
+  right:0;
+}

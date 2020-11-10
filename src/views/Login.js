@@ -49,7 +49,6 @@ class Login extends Component {
             <div id="login">
                 <h3 className="text-center text-white pt-5">Login form</h3>
                 <div className="container">
-                    Profile: {JSON.stringify(this.state.userData)}
                     <br/>
                     Type in admin/admin:
                     <div id="login-row" className="row justify-content-center align-items-center">

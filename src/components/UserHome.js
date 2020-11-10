@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Redirect, Link} from "react-router-dom";
 import MemberInfo from "./MemberInfo"
 import Preferences from './Preferences';
+import Profile from './Profile';
 import {Relationships} from "../Constants";
 
 
@@ -26,6 +27,15 @@ function PresentOptions({userData, handleClick}) {
     return (
         <div>
             <MemberInfo userData={userData}/>
+
+            <br/>
+
+            <button
+                className="btn btn-info btn-md"
+                name="Profile"
+                onClick={handleClick}>
+                Manage Profile
+            </button>
 
             <br/>
 
@@ -92,6 +102,9 @@ class UserHome extends Component {
         const relationshipIsSelected = this.state.relationshipSelected;
         if (this.state.selectedRelationship === 'Preferences') {
             return <Preferences userData={this.userData} />
+        }
+        if (this.state.selectedRelationship === 'Profile') {
+            return <Profile userData={this.userData} />
         }
         if (!relationshipIsSelected) {
             return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
