@@ -1,87 +1,89 @@
 import React, {Component} from 'react';
 
 import {Redirect} from "react-router-dom";
+import MemberInfo from "./MemberInfo"
+import {Relationships} from "../Constants";
 
+
+function ListRelationship({selectedRelationship, userData}) {
+    return (
+        <Redirect
+            push
+            to={{
+                pathname: '/member-list',
+                state: {
+                    userData: userData,
+                    selectedRelationship: selectedRelationship,
+                }
+            }}
+        />
+    )
+}
+
+function PresentOptions({userData, handleClick}) {
+    return (
+        <div>
+            <MemberInfo userData={userData}/>
+
+            <br/>
+
+            <button
+                className="btn btn-info btn-md"
+                name={Relationships.COMPATIBLES.NAME}
+                onClick={handleClick}>
+                View Compatible Users
+            </button>
+
+            <br/>
+
+            <button
+                className="btn btn-info btn-md"
+                name={Relationships.ADMIRERS.NAME}
+                onClick={handleClick}>
+                View Admirers
+            </button>
+
+            <br/>
+
+            <button
+                className="btn btn-info btn-md"
+                name={Relationships.MATCHES.NAME}
+                onClick={handleClick}>
+                View Matches
+            </button>
+        </div>
+    )
+}
 
 class UserHome extends Component {
     constructor(props) {
         super(props);
-        this.userData = props.location.state.userdata;
+        this.userData = props.location.state.userData;
         this.state = {
-            viewSelected: false,
-            selectedPath: null
+            relationshipSelected: false,
+            selectedRelationship: null
         };
     }
 
-    getPath = name => {
-        if (name === 'compatibles') {
-            return '/compatibles'
-        } else if (name === 'admirers') {
-            return '/admirers'
-        } else if (name === 'loveMatches') {
-            return '/matches'
-        } else {
-            return null
-        }
-    }
+
 
     handleClick = (event) => {
-        let viewRelationship = event.target.name;
-        let path = this.getPath(viewRelationship)
+        let relationship = event.target.name;
         this.setState(
             {
-                viewSelected: true,
-                selectedPath: path
+                relationshipSelected: true,
+                selectedRelationship: relationship
             }
         )
     }
 
 
     render() {
-        const {profileId, name, gender, age, celebStatus, bio} = this.userData
-        if (this.state.viewSelected) {
-            const data = this.userData;
-            const path = this.state.selectedPath;
-            return (
-                <Redirect
-                    push
-                    to={{
-                        pathname: path,
-                        state: {
-                            userdata: data
-                        }
-                    }}
-                />
-            )
+        const relationshipIsSelected = this.state.relationshipSelected;
+        if (!relationshipIsSelected) {
+            return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
         }
-        return (
-            <div>
-                <h1>{name}'s Profile</h1>
-                <h3>Age: {age}</h3>
-                <h3>Gender: {gender}</h3>
-                <h3>Status: {celebStatus}</h3>
-                <h3>Bio: {bio}</h3>
-
-                <br/>
-
-                <button className="btn btn-info btn-md" name='compatibles' onClick={this.handleClick}>
-                    View Compatible Users
-                </button>
-
-                <br/>
-
-                <button className="btn btn-info btn-md" name='admirers' onClick={this.handleClick}>
-                    View Admirers
-                </button>
-
-                <br/>
-
-                <button className="btn btn-info btn-md" name='loveMatches' onClick={this.handleClick}>
-                    View Matches
-                </button>
-            </div>
-
-        )
+        return <ListRelationship selectedRelationship={this.state.selectedRelationship} userData={this.userData} />
     }
 }
 
