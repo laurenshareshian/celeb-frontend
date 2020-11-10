@@ -12,7 +12,8 @@
     "react-scripts": "3.0.1",
     "react-skylight": "^0.5.1",
     "react-table": "^6.10.0",
-    "swr": "^0.3.8"
+    "swr": "^0.3.8",
+    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,9 +35,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "engines": {
     "node": "10.x"
