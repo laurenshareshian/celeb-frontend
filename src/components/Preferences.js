@@ -10,20 +10,28 @@ class Preferences extends Component {
         super(props);
         this.host = 'https://intense-refuge-49089.herokuapp.com/';
         // this.host = 'http://localhost:8080/';
-        this.state = {ageMin: '', ageMax: '', gender: '',
-        fkProfileId: props.userData.profileId, routeToUserHome: false};
+        this.state = {
+            ageMin: 18,
+            ageMax: 100,
+            gender: '',
+            fkProfileId: props.userData.profileId,
+            routeToUserHome: false
+        };
     }
 
     editPreferences = () => {
         const preferences = {
-        ageMin: this.state.ageMin, ageMax: this.state.ageMax,
-        gender: this.state.gender, fkProfileId: this.state.fkProfileId};
+            ageMin: this.state.ageMin,
+            ageMax: this.state.ageMax,
+            gender: this.state.gender,
+            fkProfileId: this.state.fkProfileId
+        };
         fetch(this.host + "/api/preferences/update-preferences/" + this.state.fkProfileId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(preferences)
         })
-        .catch(err => console.error(err));
+            .catch(err => console.error(err));
 
         this.setState({routeToUserHome: true});
     };
@@ -34,7 +42,7 @@ class Preferences extends Component {
 
     render() {
         if (this.state.routeToUserHome) {
-            return <UserHome userData={this.props.userData} />
+            return <UserHome userData={this.props.userData}/>
         }
         return (
             <div id="login">
@@ -77,7 +85,11 @@ class Preferences extends Component {
 
                                     <br/>
                                 </div>
-                                <input type="submit" name="submit" onClick={this.editPreferences} className="btn btn-info btn-md"
+                                <input type="submit" name="submit" onClick={() => this.setState({routeToUserHome: true})}
+                                       className="btn btn-info btn-md"
+                                       value="Go Back"/>
+                                <input type="submit" name="submit" onClick={this.editPreferences}
+                                       className="btn btn-info btn-md"
                                        value="Submit"/>
                             </div>
                         </div>

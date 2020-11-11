@@ -11,30 +11,32 @@ class Profile extends Component {
         this.host = 'https://intense-refuge-49089.herokuapp.com/';
 //         this.host = 'http://localhost:8080/';
         this.state = {
-        profileId: props.userData.profileId,
-        firstName: props.userData.firstName,
-        lastName: props.userData.lastName,
-        age: props.userData.age,
-        gender: props.userData.gender,
-        celebStatus: props.userData.celebStatus,
-        bio: props.userData.bio,
-        fkEmailId: props.userData.fkEmailId,
-        routeToUserHome: false};
+            profileId: props.userData.profileId,
+            firstName: props.userData.firstName,
+            lastName: props.userData.lastName,
+            age: props.userData.age,
+            gender: props.userData.gender,
+            celebStatus: props.userData.celebStatus,
+            bio: props.userData.bio,
+            fkEmailId: props.userData.fkEmailId,
+            routeToUserHome: false
+        };
     }
 
     editProfile = () => {
         const preferences = {
-        profileId: this.state.profileId,
-        firstName: this.state.firstName, lastName: this.state.lastName,
-        gender: this.state.gender, age: this.state.age,
-        celebStatus: this.state.celebStatus, bio: this.state.bio,
-        fkEmailId: this.state.emailId};
+            profileId: this.state.profileId,
+            firstName: this.state.firstName, lastName: this.state.lastName,
+            gender: this.state.gender, age: this.state.age,
+            celebStatus: this.state.celebStatus, bio: this.state.bio,
+            fkEmailId: this.state.emailId
+        };
         fetch(this.host + "/api/profile/update-profiles/" + this.state.profileId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(preferences)
         })
-        .catch(err => console.error(err));
+            .catch(err => console.error(err));
 
         this.setState({routeToUserHome: true});
     };
@@ -45,7 +47,7 @@ class Profile extends Component {
 
     render() {
         if (this.state.routeToUserHome) {
-            return <UserHome userData={this.props.userData} />
+            return <UserHome userData={this.props.userData}/>
         }
         return (
             <div id="login">
@@ -100,7 +102,11 @@ class Profile extends Component {
 
                                     <br/>
                                 </div>
-                                <input type="submit" name="submit" onClick={this.editProfile} className="btn btn-info btn-md"
+                                <input type="submit" name="submit" onClick={() => this.setState({routeToUserHome: true})}
+                                       className="btn btn-info btn-md"
+                                       value="Go Back"/>
+                                <input type="submit" name="submit" onClick={this.editProfile}
+                                       className="btn btn-info btn-md"
                                        value="Submit"/>
                             </div>
                         </div>
