@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
+import {newUser} from "../Constants";
 import {Redirect} from "react-router-dom";
 
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
-        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        // this.host = 'http://localhost:8080/';
         this.state = {
             firstName: '',
             lastName: '',
@@ -19,16 +18,21 @@ class SignUp extends Component {
     }
 
     handleChange = event => {
-        const {name, value, type, checked} = event.target
+        const {name, value, type, checked} = event.target;
+        let val = type === 'submit' ? checked : value;
         this.setState({
-            [name]: value
+            [name]: val
         })
+    };
+
+    handleSubmit = event => {
+        newUser(this.state)
     }
 
     render() {
         return (
             <main>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <input
                         name="firstName"
                         value={this.state.firstName}
@@ -63,8 +67,8 @@ class SignUp extends Component {
                         <input
                             type="radio"
                             name="gender"
-                            value="M"
-                            checked={this.state.gender === "M"}
+                            value="male"
+                            checked={this.state.gender === "male"}
                             onChange={this.handleChange}
                         /> Male
                     </label>
@@ -75,8 +79,8 @@ class SignUp extends Component {
                         <input
                             type="radio"
                             name="gender"
-                            value="F"
-                            checked={this.state.gender === "F"}
+                            value="female"
+                            checked={this.state.gender === "female"}
                             onChange={this.handleChange}
                         /> Female
                     </label>
@@ -100,6 +104,13 @@ class SignUp extends Component {
                         placeholder="Biography"
                         required
                     />
+                    <br/>
+                    <input type="submit"
+                           name="submitClicked"
+                           onClick={this.handleChange}
+                           className="btn btn-info btn-md"
+                           checked={this.state.submitClicked}
+                           value="Sign up"/>
                 </form >
             </main>
         )

@@ -33,15 +33,23 @@ class Login extends Component {
     };
 
     render() {
-        const {loggedIn} = this.state;
+        const {loggedIn, clickedSignUp} = this.state;
         if (loggedIn) {
             const data = this.state.userData;
             return (<Redirect
+                push
                 to={{
                     pathname: '/user',
                     state: {
                         userData: data
                     }
+                }}
+            />)
+        } else if (clickedSignUp) {
+            return (<Redirect
+                push
+                to={{
+                    pathname: '/SignUp'
                 }}
             />)
         }
@@ -64,6 +72,8 @@ class Login extends Component {
                                 </div>
                                 <input type="submit" name="submit" onClick={this.login} className="btn btn-info btn-md"
                                        value="Login"/>
+                                <input type="submit" name="clickedSignUp" onClick={this.handleChange} className="btn btn-info btn-md"
+                                       value="Sign up"/>
                             </div>
                         </div>
                     </div>
