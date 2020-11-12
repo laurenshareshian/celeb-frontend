@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import MemberInfo from "./MemberInfo"
-import Relationships from "../Constants";
-import useSWR from "swr";
+import {Relationships, likes, sendMessage} from "../Constants";
+import LoveNote from './LoveNote'
+
 
 class ViewMember extends Component {
     constructor(props) {
@@ -9,59 +10,50 @@ class ViewMember extends Component {
         this.member = props.location.state.selectedMember;
         this.userData = props.location.state.userData;
         this.relationship = props.location.state.selectedRelationship;
-        this.host = 'https://intense-refuge-49089.herokuapp.com';
+        this.state = {
+            shouldSendMessage: false
+        }
     }
 
     render() {
-        const {message, onClick} = this.computeStuff();
+        const userId = this.userData.profileId;
+        const memberId = this.member.profileId;
+        const {message, onClick} = this.getMessageAndAction(userId, memberId);
+        let Action = this.state.shouldSendMessage
+            ? <LoveNote userId={userId} memberId={memberId} cancel={this.closeNote}/>
+            :<DisplayAction
+                message={message}
+                onClick={onClick}
+            />
         return (
             <div>
                 <MemberInfo userData={this.member}/>
-                <DisplayAction message={message} onClick={onClick}/>
+                {Action}
             </div>
         )
     }
 
+    closeNote = () => this.setState({shouldSendMessage: false})
 
-    computeStuff() {
+
+    getMessageAndAction = (userId, memberId) => {
         if (this.relationship === Relationships.MATCHES.NAME) {
             return {
                 message: "Send a Message",
-                onClick: () => {
-                    window.alert("Gunna send a love note")
-                }
+                onClick: () => this.setState({shouldSendMessage: true})
             };
         } else if (this.relationship === Relationships.ADMIRERS.NAME) {
             return {
                 message: "Like them back?",
-                onClick: () => {
-                    window.alert("Now you're a match!")
-                }
+                onClick: () => likes(userId, memberId)
             };
         } else {
             return {
                 message: "Do ya like 'em ?",
-                onClick: () => {
-                    window.alert("You like everybody ...")
-                }
+                onClick: () => likes(userId, memberId)
             };
         }
-    }
-
-    // fetchCompatibles(userId) {
-    //     return this.useGiven(this.host + Relationships.COMPATIBLES.PATH + '/' + userId);
-    // }
-    // fetchAdmirers(userId) {
-    //     return this.useGiven(this.host + Relationships.ADMIRERS.PATH + '/' + userId);
-    // }
-    // fetchMatches(userId) {
-    //     return this.useGiven(this.host + Relationships.MATCHES.PATH + '/' + userId);
-    // }
-    //
-    // useGiven(fullPath) {
-    //     const {data, error} = useSWR(fullPath);
-    //     return data;
-    // }
+    };
 }
 
 
@@ -73,5 +65,6 @@ function DisplayAction({message, onClick}) {
         </button>
     )
 }
+
 
 export default ViewMember
