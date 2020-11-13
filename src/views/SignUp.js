@@ -9,7 +9,8 @@ class SignUp extends Component {
         super(props);
         this.state = {
             goToLogIn: false,
-            userData: {
+            userData: {},
+            profileData: {
                 firstName: '',
                 lastName: '',
                 gender: '',
@@ -25,8 +26,8 @@ class SignUp extends Component {
         const {name, value, type, checked} = event.target;
         let val = type === 'submit' ? checked : value;
         this.setState(prevState => ({
-            userData: {
-                ...prevState.userData,
+            profileData: {
+                ...prevState.profileData,
                     [name]: val
             }
         }))
@@ -34,35 +35,39 @@ class SignUp extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        newUser(this.state.userData)
-            .then(() => {
+        newUser(this.state.profileData)
+            .then(userData => {
                 this.setState({
+                    userData: userData,
                     goToLogIn: true
                 })
-            })
+            });
     };
 
     render() {
-        const {goToLogin, userData} = this.state;
-        if (userData.fkEmailId === -1) {
+        const {goToLogIn, profileData} = this.state;
+        if (profileData.fkEmailId === -1) {
             return <RegisterAccount setEmailId={this.setEmailId.bind(this)}/>
-        } else if (!goToLogin) {
+        } else if (!goToLogIn) {
             return <ProfileForm
-                        userData={userData}
+                        userData={profileData}
                         handleChange={this.handleChange.bind(this)}
                         handleSubmit={this.handleSubmit.bind(this)}
                     />
         } else {
-            return <Preferences/>
+            console.log("We did it!")
+            return <Preferences userData={this.state.userData}/>
         }
 
     }
 
     setEmailId = (emailId) => {
-        console.log("this: ", this);
-        this.setState({
-            userData: emailId
-        })
+        this.setState(prevState => ({
+            profileData: {
+                ...prevState.profileData,
+                fkEmailId: emailId
+            }
+        }))
     }
 }
 

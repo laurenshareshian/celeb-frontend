@@ -10,14 +10,14 @@ class Profile extends Component {
         this.host = 'https://intense-refuge-49089.herokuapp.com/';
 //         this.host = 'http://localhost:8080/';
         this.state = {
-            profileId: props.userData.profileId,
-            firstName: props.userData.firstName,
-            lastName: props.userData.lastName,
-            age: props.userData.age,
-            gender: props.userData.gender,
-            celebStatus: props.userData.celebStatus,
-            bio: props.userData.bio,
-            fkEmailId: props.userData.fkEmailId,
+            profileId: props.profileData.profileId,
+            firstName: props.profileData.firstName,
+            lastName: props.profileData.lastName,
+            age: props.profileData.age,
+            gender: props.profileData.gender,
+            celebStatus: props.profileData.celebStatus,
+            bio: props.profileData.bio,
+            fkEmailId: props.profileData.fkEmailId,
             routeToUserHome: false
         };
     }
@@ -46,7 +46,7 @@ class Profile extends Component {
 
     render() {
         if (this.state.routeToUserHome) {
-            return <UserHome userData={this.props.userData}/>
+            return <UserHome userData={this.props.profileData}/>
         }
         return (
             <div id="login">

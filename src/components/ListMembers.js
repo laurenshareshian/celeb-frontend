@@ -8,13 +8,11 @@ import {Relationships, useRequest} from "../Constants";
 class ListMembers extends Component {
     constructor(props) {
         super(props);
-        this.userData = props.location.state.userData;
+        this.userData = props.location.state.userData || props.userData;
         this.selectedRelationship = props.location.state.selectedRelationship;
         this.state = {
             selectedMember: null
         };
-        // this.host = 'http://localhost:8080';
-        // this.host = 'https://intense-refuge-49089.herokuapp.com';
     }
 
 
@@ -35,7 +33,7 @@ class ListMembers extends Component {
                 to={{
                     pathname: '/member-profile',
                     state: {
-                        userData: data,
+                        profileData: data,
                         selectedMember: selectedMember,
                         selectedRelationship: selectedRelationship
                     }

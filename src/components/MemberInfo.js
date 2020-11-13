@@ -4,10 +4,10 @@ import React from "react";
 let MemberInfo = props => {
     console.log("props in info")
     console.log(props)
-    if (props.userData) {
+    if (props.profileData) {
         return (
             <div>
-                <h1>Welcome back, {props.userData.firstName} {props.userData.lastName}!</h1>
+                <h1>Welcome back, {props.profileData.firstName} {props.profileData.lastName}!</h1>
 
             </div>
         )

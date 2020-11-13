@@ -8,7 +8,7 @@ class ViewMember extends Component {
     constructor(props) {
         super(props)
         this.member = props.location.state.selectedMember;
-        this.userData = props.location.state.userData;
+        this.userData = props.location.state.profileData;
         this.relationship = props.location.state.selectedRelationship;
         this.state = {
             shouldSendMessage: false

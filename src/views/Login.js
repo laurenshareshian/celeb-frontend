@@ -21,7 +21,7 @@ class Login extends Component {
             .then(response => response.json())
             .then(jsonResponse => {
                 this.setState({
-                    userData: jsonResponse,
+                    profileData: jsonResponse,
                     loggedIn: true
                 })
             })
@@ -35,13 +35,13 @@ class Login extends Component {
     render() {
         const {loggedIn, clickedSignUp} = this.state;
         if (loggedIn) {
-            const data = this.state.userData;
+            const data = this.state.profileData;
             return (<Redirect
                 push
                 to={{
                     pathname: '/user',
                     state: {
-                        userData: data
+                        profileData: data
                     }
                 }}
             />)
