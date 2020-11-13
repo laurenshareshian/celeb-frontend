@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MemberInfo from "./MemberInfo"
-import {Relationships, likes, sendMessage} from "../Constants";
+import {Relationships, likes} from "../Constants";
 import LoveNote from './LoveNote'
 
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Redirect, Link} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import MemberInfo from "./MemberInfo"
 import Preferences from './Preferences';
 import Profile from './Profile';

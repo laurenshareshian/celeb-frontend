@@ -8,11 +8,11 @@ class Login extends Component {
         super(props);
         this.host = 'https://intense-refuge-49089.herokuapp.com/';
         // this.host = 'http://localhost:8080/';
-        this.state = {email: '', password: '', userData: {}, loggedIn: false};
+        this.state = {emails: '', password: '', userData: {}, loggedIn: false};
     }
 
     login = () => {
-        const user = {email: this.state.email, password: this.state.password};
+        const user = {emails: this.state.emails, password: this.state.password};
         fetch(this.host + "api/login/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

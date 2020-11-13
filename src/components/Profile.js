@@ -1,8 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import UserHome from './UserHome';
-import {Redirect} from "react-router-dom";
-
+// import {Redirect} from "react-router-dom";
 
 class Profile extends Component {
     constructor(props) {
