@@ -7,8 +7,8 @@ class Preferences extends Component {
     constructor(props) {
         console.log('props: ', props);
         super(props);
-        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        // this.host = 'http://localhost:8080/';
+//        this.host = 'https://intense-refuge-49089.herokuapp.com/';
+        this.host = 'http://localhost:8080/';
         this.state = {
             ageMin: 18,
             ageMax: 100,

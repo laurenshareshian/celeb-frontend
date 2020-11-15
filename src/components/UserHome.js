@@ -27,7 +27,6 @@ function PresentOptions({userData, handleClick}) {
     return (
         <div>
             <MemberInfo userData={userData}/>
-
             <br/>
 
             <button
@@ -104,7 +103,7 @@ class UserHome extends Component {
             return <Preferences userData={this.userData} />
         }
         if (this.state.selectedRelationship === 'Profile') {
-            return <Profile userData={this.userData} />
+            return <Profile profileData={this.userData} />
         }
         if (!relationshipIsSelected) {
             return <PresentOptions userData={this.userData} handleClick={this.handleClick} />

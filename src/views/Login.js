@@ -6,13 +6,13 @@ import {Redirect} from "react-router-dom";
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        // this.host = 'http://localhost:8080/';
-        this.state = {emails: '', password: '', userData: {}, loggedIn: false};
+//        this.host = 'https://intense-refuge-49089.herokuapp.com/';
+        this.host = 'http://localhost:8080/';
+        this.state = {email: '', password: '', userData: {}, loggedIn: false};
     }
 
     login = () => {
-        const user = {emails: this.state.emails, password: this.state.password};
+        const user = {email: this.state.email, password: this.state.password};
         fetch(this.host + "api/login/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -21,7 +21,7 @@ class Login extends Component {
             .then(response => response.json())
             .then(jsonResponse => {
                 this.setState({
-                    profileData: jsonResponse,
+                    userData: jsonResponse,
                     loggedIn: true
                 })
             })
@@ -35,13 +35,14 @@ class Login extends Component {
     render() {
         const {loggedIn, clickedSignUp} = this.state;
         if (loggedIn) {
-            const data = this.state.profileData;
+            const data = this.state.userData;
+            console.log('here data', data);
             return (<Redirect
                 push
                 to={{
                     pathname: '/user',
                     state: {
-                        profileData: data
+                        userData: data
                     }
                 }}
             />)

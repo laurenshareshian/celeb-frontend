@@ -1,6 +1,7 @@
 import useSwr from 'swr'
 
-const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
+// const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
+const baseUrl = 'http://localhost:8080';
 const likePath = '/api/matches/create-matches';
 const registerAccountPath = '/api/login/create-logins';
 
@@ -47,6 +48,16 @@ export const registerAccount = (email, password) => {
 
 export const newUser = (newUserData) => {
     return fetch(baseUrl + "/api/profile/create-profiles", postBody(newUserData))
+        .then(resp => {
+            console.log("response: ", resp);
+            return resp.json();
+        })
+        .catch(err => console.error(err))
+}
+
+export const newPreferences = (newPreferencesData) => {
+
+    return fetch(baseUrl + "/api/preferences/create-preferences", postBody(newPreferencesData))
         .then(resp => {
             console.log("response: ", resp);
             return resp.json();

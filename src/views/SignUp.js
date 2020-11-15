@@ -1,14 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
-import {newUser} from "../Constants";
+import {newUser, newPreferences} from "../Constants";
 import RegisterAccount from "../components/RegisterAccount";
-import Preferences from "../components/Preferences";
+//import Preferences from "../components/Preferences";
+import {Redirect} from "react-router-dom";
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
             goToLogIn: false,
+            goToPreferences: false,
             userData: {},
             profileData: {
                 firstName: '',
@@ -18,6 +20,12 @@ class SignUp extends Component {
                 celebStatus: '',
                 bio: '',
                 fkEmailId: -1
+            },
+            preferencesData: {
+                ageMin: '',
+                ageMax: '',
+                gender: '',
+                fkProfileId: ''
             }
         };
     }
@@ -28,6 +36,17 @@ class SignUp extends Component {
         this.setState(prevState => ({
             profileData: {
                 ...prevState.profileData,
+                    [name]: val
+            }
+        }))
+    };
+
+    handlePreferencesChange = event => {
+        const {name, value, type, checked} = event.target;
+        let val = type === 'submit' ? checked : value;
+        this.setState(prevState => ({
+            preferencesData: {
+                ...prevState.preferencesData,
                     [name]: val
             }
         }))
@@ -44,8 +63,25 @@ class SignUp extends Component {
             });
     };
 
+    handlePreferencesSubmit = (event) => {
+        event.preventDefault();
+        const savedPreferencesData = {
+            ageMin: this.state.preferencesData.ageMin,
+            ageMax: this.state.preferencesData.ageMax,
+            gender: this.state.preferencesData.gender,
+            fkProfileId: this.state.profileData.fkEmailId
+        }
+        newPreferences(savedPreferencesData)
+            .then(userData => {
+                this.setState({
+                    userData: userData,
+                    goToPreferences: true
+                })
+            });
+    };
+
     render() {
-        const {goToLogIn, profileData} = this.state;
+        const {goToLogIn, goToPreferences, profileData, preferencesData} = this.state;
         if (profileData.fkEmailId === -1) {
             return <RegisterAccount setEmailId={this.setEmailId.bind(this)}/>
         } else if (!goToLogIn) {
@@ -54,11 +90,21 @@ class SignUp extends Component {
                         handleChange={this.handleChange.bind(this)}
                         handleSubmit={this.handleSubmit.bind(this)}
                     />
-        } else {
+        } else if (!goToPreferences) {
             console.log("We did it!")
-            return <Preferences userData={this.state.userData}/>
+            return <PreferencesForm userData={preferencesData}
+                        profileData = {profileData}
+                        handlePreferencesChange={this.handlePreferencesChange.bind(this)}
+                        handlePreferencesSubmit={this.handlePreferencesSubmit.bind(this)}
+                        />
+        } else {
+                return (<Redirect
+                    push
+                    to={{
+                        pathname: '/',
+                    }}
+                />)
         }
-
     }
 
     setEmailId = (emailId) => {
@@ -69,6 +115,7 @@ class SignUp extends Component {
             }
         }))
     }
+
 }
 
 function ProfileForm({userData, handleChange, handleSubmit}) {
@@ -109,8 +156,8 @@ function ProfileForm({userData, handleChange, handleSubmit}) {
                     <input
                         type="radio"
                         name="gender"
-                        value="male"
-                        checked={userData.gender === "male"}
+                        value="M"
+                        checked={userData.gender === "M"}
                         onChange={handleChange}
                         className="form-control"
                     /> Male
@@ -122,8 +169,8 @@ function ProfileForm({userData, handleChange, handleSubmit}) {
                     <input
                         type="radio"
                         name="gender"
-                        value="female"
-                        checked={userData.gender === "female"}
+                        value="F"
+                        checked={userData.gender === "F"}
                         onChange={handleChange}
                         className="form-control"
                     /> Female
@@ -157,4 +204,59 @@ function ProfileForm({userData, handleChange, handleSubmit}) {
     )
 }
 
+function PreferencesForm({userData, profileData, handlePreferencesChange, handlePreferencesSubmit}) {
+    return (
+        <main>
+            <form onSubmit={handlePreferencesSubmit}>
+                <div id="login">
+                    <h3 className="text-center text-white pt-5">Preferences form</h3>
+                    <div className="container">
+                        <br/>
+                        <h1>Who are you interested in?</h1>
+                        <div id="login-row" className="row justify-content-center align-items-center">
+                            <div id="login-column" className="col-md-6">
+                                <div id="login-box" className="col-md-12">
+                                    <div className="form-group">
+                                        <input type="text" name="ageMin" onChange={handlePreferencesChange}
+                                               className="form-control" placeholder="minimum age"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="ageMax" name="ageMax" onChange={handlePreferencesChange}
+                                               className="form-control" placeholder="maximum age"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="pr-sm-2">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="M"
+                                                onChange={handlePreferencesChange}
+                                            /> Male
+                                        </label>
+
+
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="F"
+                                                onChange={handlePreferencesChange}
+                                            /> Female
+                                        </label>
+
+                                        <br/>
+                                    </div>
+                                    onChange={handlePreferencesChange}/>
+                                    <input type="submit"
+                                           className="btn btn-info btn-md"
+                                           value="Submit"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    )
+}
 export default SignUp

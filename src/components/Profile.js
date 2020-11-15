@@ -6,9 +6,9 @@ import UserHome from './UserHome';
 class Profile extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
-        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-//         this.host = 'http://localhost:8080/';
+        console.log('here2 data', props);
+//        this.host = 'https://intense-refuge-49089.herokuapp.com/';
+        this.host = 'http://localhost:8080/';
         this.state = {
             profileId: props.profileData.profileId,
             firstName: props.profileData.firstName,

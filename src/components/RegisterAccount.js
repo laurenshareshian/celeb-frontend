@@ -23,6 +23,7 @@ class RegisterAccount extends Component {
         registerAccount(this.state.email, this.state.password)
             .then(({emailId, email, password}) => {
                 this.setEmailId(emailId);
+            console.log('emailId', emailId);
             });
     };
 
