@@ -1,7 +1,7 @@
 import useSwr from 'swr'
 
-// const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
-const baseUrl = 'http://localhost:8080';
+export const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
+//export const baseUrl = 'http://localhost:8080';
 const likePath = '/api/matches/create-matches';
 const registerAccountPath = '/api/login/create-logins';
 

@@ -19,3 +19,8 @@
   bottom:0;
   right:0;
 }
+
+ a, a:hover, a:focus, a:active {
+      text-decoration: none !important;
+      color: cornsilk !important;
+ }

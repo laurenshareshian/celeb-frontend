@@ -1,19 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
-
+import {baseUrl} from "../Constants";
 
 class Login extends Component {
     constructor(props) {
         super(props);
-//        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        this.host = 'http://localhost:8080/';
+        this.host = baseUrl;
         this.state = {email: '', password: '', userData: {}, loggedIn: false};
     }
 
     login = () => {
         const user = {email: this.state.email, password: this.state.password};
-        fetch(this.host + "api/login/login", {
+        fetch(this.host + "/api/login/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(user)

@@ -1,14 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import UserHome from './UserHome';
-// import {Redirect} from "react-router-dom";
+import {baseUrl} from "../Constants";
 
 class Profile extends Component {
     constructor(props) {
         super(props);
-        console.log('here2 data', props);
-//        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        this.host = 'http://localhost:8080/';
+        this.host = baseUrl;
         this.state = {
             profileId: props.profileData.profileId,
             firstName: props.profileData.firstName,
