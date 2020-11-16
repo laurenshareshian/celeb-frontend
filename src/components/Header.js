@@ -1,12 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 
 export default function Header() {
     return (
 
         <header className="Header">
-            <h1 className="App-title">MatchMaker</h1>
+            <h1 className="App-title"><a href="/">MatchMaker</a></h1>
         </header>
 
 

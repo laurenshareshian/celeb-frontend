@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Route, BrowserRouter as Router} from "react-router-dom";
 import './App.css';
-import useSWR, {SWRConfig} from "swr";
+import {SWRConfig} from "swr";
 
 import Login from "./views/Login";
 import SignUp from "./views/SignUp";

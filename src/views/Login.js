@@ -1,19 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
-
+import {baseUrl} from "../Constants";
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.host = 'https://intense-refuge-49089.herokuapp.com/';
-        // this.host = 'http://localhost:8080/';
+        this.host = baseUrl;
         this.state = {email: '', password: '', userData: {}, loggedIn: false};
     }
 
     login = () => {
         const user = {email: this.state.email, password: this.state.password};
-        fetch(this.host + "api/login/login", {
+        fetch(this.host + "/api/login/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(user)
@@ -33,10 +32,12 @@ class Login extends Component {
     };
 
     render() {
-        const {loggedIn} = this.state;
+        const {loggedIn, clickedSignUp} = this.state;
         if (loggedIn) {
             const data = this.state.userData;
+            console.log('here data', data);
             return (<Redirect
+                push
                 to={{
                     pathname: '/user',
                     state: {
@@ -44,12 +45,18 @@ class Login extends Component {
                     }
                 }}
             />)
+        } else if (clickedSignUp) {
+            return (<Redirect
+                push
+                to={{
+                    pathname: '/SignUp'
+                }}
+            />)
         }
         return (
             <div id="login">
                 <h3 className="text-center text-white pt-5">Login form</h3>
                 <div className="container">
-                    Profile: {JSON.stringify(this.state.userData)}
                     <br/>
                     Type in admin/admin:
                     <div id="login-row" className="row justify-content-center align-items-center">
@@ -65,6 +72,8 @@ class Login extends Component {
                                 </div>
                                 <input type="submit" name="submit" onClick={this.login} className="btn btn-info btn-md"
                                        value="Login"/>
+                                <input type="submit" name="clickedSignUp" onClick={this.handleChange} className="btn btn-info btn-md"
+                                       value="Sign up"/>
                             </div>
                         </div>
                     </div>

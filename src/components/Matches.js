@@ -6,7 +6,7 @@
 // class Matches extends Component {
 //     constructor(props) {
 //         super(props);
-//         this.userData = props.location.state.userData;
+//         this.profileData = props.location.state.profileData;
 //         //this.host = 'http://localhost:8080/';
 //         this.host = 'https://intense-refuge-49089.herokuapp.com';
 //         this.matchesPath = '/api/profile/get-matches';
@@ -104,7 +104,7 @@
 //     }
 //
 //     fetchMatches = () => {
-//         fetch(this.matchesPathFor(this.userData.profileId))
+//         fetch(this.matchesPathFor(this.profileData.profileId))
 //             .then((response) => response.json())
 //             .then((responseData) => {
 //                 this.setState({
