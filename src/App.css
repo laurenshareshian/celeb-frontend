@@ -1,8 +1,11 @@
+.App {
+  text-align: center;
+}
+
 .Header {
   background-color: #D4418E;
-  height: 150px;
-  padding: 55px;
-  color: cornsilk;
+  height: 130px;
+  color: white;
 }
 
 .Footer {
@@ -18,10 +21,18 @@
 
 .btn-info {
   background-color: #7F5A83 !important;
-  border-color: white important!
+  border-color: white !important;
 }
 
  a, a:hover, a:focus, a:active {
       text-decoration: none !important;
       color: white !important;
+ }
+
+ .content {
+    padding-top:8%;
+ }
+
+img {
+ width: 130px !important;
  }

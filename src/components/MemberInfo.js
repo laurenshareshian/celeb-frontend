@@ -7,7 +7,7 @@ let MemberInfo = props => {
     if (props.userData) {
         return (
             <div>
-                <h1>Welcome back, {props.userData.firstName} {props.userData.lastName}!</h1>
+                <h2>Welcome back, {props.userData.firstName} {props.userData.lastName}!</h2>
 
             </div>
         )

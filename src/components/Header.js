@@ -1,10 +1,11 @@
 import React from "react";
+import logo from './heart.png';
 
 export default function Header() {
     return (
 
         <header className="Header">
-            <h1 className="App-title"><a href="/">MatchMaker</a></h1>
+            <h1><a href="/"><img src={logo} alt="Logo" /></a></h1>
         </header>
 
 

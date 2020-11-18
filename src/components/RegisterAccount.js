@@ -29,34 +29,47 @@ class RegisterAccount extends Component {
 
     render() {
         return (
-            <main>
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        name="email"
-                        type="email"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                        placeholder="Email"
-                        required
-                    />
+            <form onSubmit={this.handleSubmit}>
+            <div className="container">
+            <h3 className="text-center text-white pt-5">Register form</h3>
+                <div className="container">
+                    <h2> Register </h2>
+                    <div id="login-row" className="row justify-content-center align-items-center">
+                        <div id="login-column" className="col-md-6">
+                            <div id="login-box" className="col-md-12">
+                                <div className="form-group">
+                                    <input
+                                        name="email"
+                                        type="email"
+                                        className="form-control"
+                                        value={this.state.email}
+                                        onChange={this.handleChange}
+                                        placeholder="Email"
+                                        required
+                                    />
+                                </div>
 
-                    <br/>
+                                <div className="form-group">
+                                        <input
+                                            name="password"
+                                            type="password"
+                                            className="form-control"
+                                            value={this.state.password}
+                                            onChange={this.handleChange}
+                                            placeholder="Password"
+                                            required
+                                        />
+                                </div>
 
-                    <input
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        placeholder="Password"
-                        required
-                    />
-
-                    <br/>
-
-                    <input type="submit"
-                           className="btn btn-info btn-md"
-                           value="Submit"/>
-                </form>
-            </main>
+                                <input type="submit"
+                                       className="btn btn-info btn-md"
+                                       value="Submit"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         )
     }
 }
