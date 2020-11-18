@@ -154,6 +154,12 @@ function ProfileForm({userData, handleChange, handleSubmit}) {
                                             value={userData.bio} onChange={handleChange}
                                                className="form-control" placeholder="Bio"/>
                                     </div>
+                                    Enter https://bit.ly/newsuitor if you don't have a photo:
+                                    <div className="form-group">
+                                        <input type="text" name="picUrl"
+                                            value={userData.picUrl} onChange={handleChange}
+                                               className="form-control" placeholder="Pic Url"/>
+                                    </div>
                                     <div className="form-group">
                                         <label className="pr-sm-2">
                                             <input

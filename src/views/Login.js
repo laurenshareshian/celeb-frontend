@@ -58,7 +58,7 @@ class Login extends Component {
                 <h3 className="text-center text-white pt-5">Login form</h3>
                 <div className="container">
                     <br/>
-                    Type in admin/admin to poke around or create a new account!
+                    Type in leo@gmail.com/leo to poke around or create a new account!
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">

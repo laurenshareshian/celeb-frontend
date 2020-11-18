@@ -74,6 +74,10 @@ class Profile extends Component {
                                            className="form-control" placeholder={this.state.bio}/>
                                 </div>
                                 <div className="form-group">
+                                    <input type="text" name="picUrl" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.picUrl}/>
+                                </div>
+                                <div className="form-group">
                                     <label className="pr-sm-2">
                                         <input
                                             type="radio"

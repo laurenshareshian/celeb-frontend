@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import MemberInfo from "./MemberInfo"
+import SuitorInfo from "./SuitorInfo"
 import {Relationships, likes} from "../Constants";
 import LoveNote from './LoveNote'
 
@@ -27,7 +27,7 @@ class ViewMember extends Component {
             />
         return (
             <div>
-                <MemberInfo userData={this.member}/>
+                <SuitorInfo userData={this.member}/>
                 {Action}
             </div>
         )
@@ -59,7 +59,7 @@ class ViewMember extends Component {
 
 function DisplayAction({message, onClick}) {
     return (
-        <button
+        <button className="btn btn-info btn-md"
             onClick={onClick} >
             {message}
         </button>
