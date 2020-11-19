@@ -24,9 +24,8 @@ class App extends Component {
                         <Route exact path="/" component={Login}/>
                         <Route exact path="/SignUp" component={SignUp}/>
                         <Route exact path="/login" component={Login}/>
-                        <Route exact path="/member-list" component={ListMembers}/>
+                        {/*<Route exact path="/member-list" {props => <ListMembers {...props}/>}/>*/}
                         <Route exact path="/user" render={props => <UserHome {...props}/>}/>
-                        <Route exact path="/member-profile" render={props => <ViewMember {...props}/>}/>
                     </Router>
                     <Footer/>
                 </div>

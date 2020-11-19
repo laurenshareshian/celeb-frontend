@@ -5,11 +5,14 @@ import LoveNote from './LoveNote'
 
 
 class ViewMember extends Component {
-    constructor(props) {
-        super(props)
-        this.member = props.location.state.selectedMember;
-        this.userData = props.location.state.profileData;
-        this.relationship = props.location.state.selectedRelationship;
+    constructor({selectedMember, userData, selectedRelationship, goBack}) {
+        super({selectedMember, userData, selectedRelationship});
+        this.selectedMember = selectedMember;
+        this.userData = userData;
+        this.selectedRelationship = selectedRelationship;
+        this.message = this.getMessage(selectedRelationship);
+        this.action = this.getAction(selectedRelationship);
+        this.goBack = goBack;
         this.state = {
             shouldSendMessage: false
         }
@@ -17,18 +20,13 @@ class ViewMember extends Component {
 
     render() {
         const userId = this.userData.profileId;
-        const memberId = this.member.profileId;
-        const {message, onClick} = this.getMessageAndAction(userId, memberId);
-        let Action = this.state.shouldSendMessage
-            ? <LoveNote userId={userId} memberId={memberId} cancel={this.closeNote}/>
-            :<DisplayAction
-                message={message}
-                onClick={onClick}
-            />
+        const memberId = this.selectedMember.profileId;
         return (
             <div>
-                <SuitorInfo userData={this.member}/>
-                {Action}
+                <SuitorInfo userData={this.selectedMember}/>
+              {/*<MemberInfo userData={this.selectedMember}/>*/}
+                {this.determineAction(userId, memberId)}
+                <DisplayAction message={"Back to " + this.selectedRelationship} onClick={this.goBack}/>
             </div>
         )
     }
@@ -36,31 +34,39 @@ class ViewMember extends Component {
     closeNote = () => this.setState({shouldSendMessage: false})
 
 
-    getMessageAndAction = (userId, memberId) => {
-        if (this.relationship === Relationships.MATCHES.NAME) {
-            return {
-                message: "Send a Message",
-                onClick: () => this.setState({shouldSendMessage: true})
-            };
-        } else if (this.relationship === Relationships.ADMIRERS.NAME) {
-            return {
-                message: "Like them back?",
-                onClick: () => likes(userId, memberId)
-            };
+    getMessage = (relationship) => {
+        if (relationship === Relationships.MATCHES.NAME) {
+            return "Send a Message";
+        } else if (relationship === Relationships.ADMIRERS.NAME) {
+            return "Like them back?";
         } else {
-            return {
-                message: "Do ya like 'em ?",
-                onClick: () => likes(userId, memberId)
-            };
+            return "Do ya like 'em ?";
         }
     };
+
+    determineAction(userId, memberId) {
+        if (this.state.shouldSendMessage) {
+            return <LoveNote userId={userId} memberId={memberId} cancel={this.closeNote}/>;
+        }
+        return <DisplayAction message={this.message} onClick={this.action}/>;
+    }
+
+    getAction(relationship) {
+        if (relationship === Relationships.MATCHES.NAME) {
+            return () => this.setState({shouldSendMessage: true});
+        }
+        const userId = this.userData.profileId;
+        const memberId = this.selectedMember.profileId;
+        return () => likes(userId, memberId);
+    }
 }
 
 
 function DisplayAction({message, onClick}) {
     return (
-        <button className="btn btn-info btn-md"
-            onClick={onClick} >
+        <button
+            className="btn btn-info btn-md"
+            onClick={onClick}>
             {message}
         </button>
     )

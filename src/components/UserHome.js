@@ -1,33 +1,18 @@
 import React, {Component} from 'react';
 
-import {Redirect} from "react-router-dom";
 import MemberInfo from "./MemberInfo"
 import Preferences from './Preferences';
 import Profile from './Profile';
 import {Relationships} from "../Constants";
+import ListMembers from "./ListMembers";
 
-
-function ListRelationship({selectedRelationship, userData}) {
-    return (
-        <Redirect
-            push
-            to={{
-                pathname: '/member-list',
-                state: {
-                    userData: userData,
-                    selectedRelationship: selectedRelationship,
-                }
-            }}
-        />
-    )
-}
 
 function PresentOptions({userData, handleClick}) {
-
     return (
-        <div class="content">
+        <div className="content">
+            <h1>Welcome back, {userData.firstName}!</h1>
             <MemberInfo userData={userData}/>
-            <br/>
+            <p/>
 
             <button
                 className="btn btn-info btn-md"
@@ -36,7 +21,7 @@ function PresentOptions({userData, handleClick}) {
                 Manage Profile
             </button>
 
-            <br/>
+            <p/>
 
             <button
                 className="btn btn-info btn-md"
@@ -45,7 +30,7 @@ function PresentOptions({userData, handleClick}) {
                 Manage Dating Preferences
             </button>
 
-            <br/>
+            <p/>
 
             <button
                 className="btn btn-info btn-md"
@@ -54,7 +39,7 @@ function PresentOptions({userData, handleClick}) {
                 View Compatible Users
             </button>
 
-            <br/>
+            <p/>
 
             <button
                 className="btn btn-info btn-md"
@@ -63,7 +48,7 @@ function PresentOptions({userData, handleClick}) {
                 View Admirers
             </button>
 
-            <br/>
+            <p/>
 
             <button
                 className="btn btn-info btn-md"
@@ -78,6 +63,7 @@ function PresentOptions({userData, handleClick}) {
 class UserHome extends Component {
     constructor(props) {
         super(props);
+        console.log("Props in UserHome", props);
         this.userData = props.userData || props.location.state.userData;
         this.state = {
             relationshipSelected: false,
@@ -108,7 +94,7 @@ class UserHome extends Component {
         if (!relationshipIsSelected) {
             return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
         }
-        return <ListRelationship selectedRelationship={this.state.selectedRelationship} userData={this.userData} />
+        return <ListMembers selectedRelationship={this.state.selectedRelationship} userData={this.userData} />
     }
 }
 

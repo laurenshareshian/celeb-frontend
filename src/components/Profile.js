@@ -8,43 +8,51 @@ class Profile extends Component {
         super(props);
         this.host = baseUrl;
         this.state = {
-            profileId: props.profileData.profileId,
-            firstName: props.profileData.firstName,
-            lastName: props.profileData.lastName,
-            age: props.profileData.age,
-            gender: props.profileData.gender,
-            celebStatus: props.profileData.celebStatus,
-            bio: props.profileData.bio,
-            fkEmailId: props.profileData.fkEmailId,
+            profileData: props.profileData,
             routeToUserHome: false
         };
     }
 
     editProfile = () => {
+        const profileData = this.state.profileData;
         const preferences = {
-            profileId: this.state.profileId,
-            firstName: this.state.firstName, lastName: this.state.lastName,
-            gender: this.state.gender, age: this.state.age,
-            celebStatus: this.state.celebStatus, bio: this.state.bio,
-            fkEmailId: this.state.emailId
+            profileId: profileData.profileId,
+            firstName: profileData.firstName,
+            lastName: profileData.lastName,
+            gender: profileData.gender,
+            age: profileData.age,
+            celebStatus: profileData.celebStatus,
+            bio: profileData.bio,
+            fkEmailId: profileData.emailId || profileData.fkEmailId
         };
-        fetch(this.host + "/api/profile/update-profiles/" + this.state.profileId, {
+        fetch(this.host + "/api/profile/update-profiles/" + preferences.profileId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(preferences)
         })
+            .then(resp => resp.json())
+            .then(resp => this.setState({profileData: resp, routeToUserHome: true}))
             .catch(err => console.error(err));
-
-        this.setState({routeToUserHome: true});
     };
 
-    handleChange = (event) => {
-        this.setState({[event.target.name]: event.target.value});
+    // handleChange = (event) => {
+    //     this.setState({[event.target.name]: event.target.value});
+    // };
+
+    handleChange = event => {
+        const {name, value, type, checked} = event.target;
+        this.setState(prevState => ({
+            profileData: {
+                ...prevState.profileData,
+                [name]: value
+            }
+        }))
     };
+
 
     render() {
         if (this.state.routeToUserHome) {
-            return <UserHome userData={this.props.profileData}/>
+            return <UserHome userData={this.state.profileData}/>
         }
         return (
                 <div className="container">
@@ -55,23 +63,23 @@ class Profile extends Component {
                             <div id="login-box" className="col-md-12">
                                 <div className="form-group">
                                     <input type="text" name="firstName" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.firstName}/>
+                                           className="form-control" placeholder={this.state.profileData.firstName}/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" name="lastName" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.lastName}/>
+                                           className="form-control" placeholder={this.state.profileData.lastName}/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" name="age" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.age}/>
+                                           className="form-control" placeholder={this.state.profileData.age}/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" name="celebStatus" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.celebStatus}/>
+                                           className="form-control" placeholder={this.state.profileData.celebStatus}/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" name="bio" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.bio}/>
+                                           className="form-control" placeholder={this.state.profileData.bio}/>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" name="picUrl" onChange={this.handleChange}
@@ -83,7 +91,7 @@ class Profile extends Component {
                                             type="radio"
                                             name="gender"
                                             value="M"
-                                            checked={this.state.gender === "M"}
+                                            checked={this.state.profileData.gender === "M"}
                                             onChange={this.handleChange}
                                         /> Male
                                     </label>
@@ -94,7 +102,7 @@ class Profile extends Component {
                                             type="radio"
                                             name="gender"
                                             value="F"
-                                            checked={this.state.gender === "F"}
+                                            checked={this.state.profileData.gender === "F"}
                                             onChange={this.handleChange}
                                         /> Female
                                     </label>

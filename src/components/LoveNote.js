@@ -18,13 +18,16 @@ class LoveNote extends Component {
     };
 
     sendIt = () => {
-        sendMessage(this.userId, this.memberId, this.state.loveNote);
-        this.goBack();
+        sendMessage(this.userId, this.memberId, this.state.loveNote)
+            .then(() => this.setState({routeToUserHome: true}))
     }
 
-    goBack = () => this.setState({routeToUserHome: true})
-
     render() {
+        const {routeToUserHome} = this.state;
+        if (routeToUserHome) {
+            console.log("Go Home")
+            this.cancel();
+        }
         return (
             <div>
                 <textarea

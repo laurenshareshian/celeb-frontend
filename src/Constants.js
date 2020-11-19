@@ -25,10 +25,16 @@ export const likes = (userId, memberId) => {
 
 export const sendMessage = (userId, memberId, message) => {
     const likeEvent = {fkProfileId: userId, fkDreamProfileId: memberId, messageToDreamProfile: message};
-    return fetch(baseUrl + likePath, postBody(likeEvent))
+    console.log("Sending in Constants.sendMessage: ", JSON.stringify(likeEvent));
+    return fetch(baseUrl + likePath,{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(likeEvent)
+    })
+        //.then(resp => resp.json())
         .then(response => {
-            console.log(response);
-            return response.json();
+            console.log("send response", response);
+            return response;
         })
         .catch(err => console.error("error", err))
 };
