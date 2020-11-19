@@ -7,6 +7,65 @@ import {Relationships} from "../Constants";
 import ListMembers from "./ListMembers";
 
 
+
+class UserHome extends Component {
+    constructor(props) {
+        super(props);
+        console.log("Props in UserHome", props);
+        this.userData = props.userData || props.location.state.userData;
+        this.state = {
+            relationshipSelected: false,
+            selectedRelationship: null
+        };
+    }
+
+
+
+    handleClick = (event) => {
+        let relationship = event.target.name;
+        this.setState(
+            {
+                relationshipSelected: true,
+                selectedRelationship: relationship
+            }
+        )
+    };
+
+    render() {
+        const relationshipIsSelected = this.state.relationshipSelected;
+        if (this.state.selectedRelationship === 'Preferences') {
+            return <Preferences userData={this.userData}/>
+        }
+        if (this.state.selectedRelationship === 'Profile') {
+            return <Profile profileData={this.userData}/>
+        }
+        if (!relationshipIsSelected) {
+            return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
+        }
+        return (
+            <div className="container">
+                <ListMembers selectedRelationship={this.state.selectedRelationship} userData={this.userData} />
+                <button
+                    className="btn btn-info btn-md"
+                    onClick={this.backToProfile}>
+                    Back to Profile
+                </button>
+            </div>
+        )
+
+
+    }
+
+    backToProfile = () => {
+        this.setState(
+            {
+                relationshipSelected: false,
+                selectedRelationship: null
+            }
+        )
+    }
+}
+
 function PresentOptions({userData, handleClick}) {
     return (
         <div className="content">
@@ -59,43 +118,4 @@ function PresentOptions({userData, handleClick}) {
         </div>
     )
 }
-
-class UserHome extends Component {
-    constructor(props) {
-        super(props);
-        console.log("Props in UserHome", props);
-        this.userData = props.userData || props.location.state.userData;
-        this.state = {
-            relationshipSelected: false,
-            selectedRelationship: null
-        };
-    }
-
-
-
-    handleClick = (event) => {
-        let relationship = event.target.name;
-        this.setState(
-            {
-                relationshipSelected: true,
-                selectedRelationship: relationship
-            }
-        )
-    }
-
-    render() {
-        const relationshipIsSelected = this.state.relationshipSelected;
-        if (this.state.selectedRelationship === 'Preferences') {
-            return <Preferences userData={this.userData} />
-        }
-        if (this.state.selectedRelationship === 'Profile') {
-            return <Profile profileData={this.userData} />
-        }
-        if (!relationshipIsSelected) {
-            return <PresentOptions userData={this.userData} handleClick={this.handleClick} />
-        }
-        return <ListMembers selectedRelationship={this.state.selectedRelationship} userData={this.userData} />
-    }
-}
-
 export default UserHome

@@ -35,9 +35,6 @@ class Profile extends Component {
             .catch(err => console.error(err));
     };
 
-    // handleChange = (event) => {
-    //     this.setState({[event.target.name]: event.target.value});
-    // };
 
     handleChange = event => {
         const {name, value, type, checked} = event.target;
@@ -55,70 +52,70 @@ class Profile extends Component {
             return <UserHome userData={this.state.profileData}/>
         }
         return (
-                <div className="container">
-                    <br/>
-                    <h2>Update your profile:</h2>
-                    <div id="login-row" className="row justify-content-center align-items-center">
-                        <div id="login-column" className="col-md-6">
-                            <div id="login-box" className="col-md-12">
-                                <div className="form-group">
-                                    <input type="text" name="firstName" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.profileData.firstName}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="lastName" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.profileData.lastName}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="age" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.profileData.age}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="celebStatus" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.profileData.celebStatus}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="bio" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.profileData.bio}/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="picUrl" onChange={this.handleChange}
-                                           className="form-control" placeholder={this.state.picUrl}/>
-                                </div>
-                                <div className="form-group">
-                                    <label className="pr-sm-2">
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="M"
-                                            checked={this.state.profileData.gender === "M"}
-                                            onChange={this.handleChange}
-                                        /> Male
-                                    </label>
-
-
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="F"
-                                            checked={this.state.profileData.gender === "F"}
-                                            onChange={this.handleChange}
-                                        /> Female
-                                    </label>
-
-                                    <br/>
-                                </div>
-                                <input type="submit" name="submit" onClick={() => this.setState({routeToUserHome: true})}
-                                       className="btn btn-info btn-md"
-                                       value="Go Back"/>
-                                <input type="submit" name="submit" onClick={this.editProfile}
-                                       className="btn btn-info btn-md"
-                                       value="Submit"/>
+            <div className="container">
+                <br/>
+                <h2>Update your profile:</h2>
+                <div id="login-row" className="row justify-content-center align-items-center">
+                    <div id="login-column" className="col-md-6">
+                        <div id="login-box" className="col-md-12">
+                            <div className="form-group">
+                                <input type="text" name="firstName" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.profileData.firstName}/>
                             </div>
+                            <div className="form-group">
+                                <input type="text" name="lastName" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.profileData.lastName}/>
+                            </div>
+                            <div className="form-group">
+                                <input type="text" name="age" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.profileData.age}/>
+                            </div>
+                            <div className="form-group">
+                                <input type="text" name="celebStatus" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.profileData.celebStatus}/>
+                            </div>
+                            <div className="form-group">
+                                <input type="text" name="bio" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.profileData.bio}/>
+                            </div>
+                            <div className="form-group">
+                                <input type="text" name="picUrl" onChange={this.handleChange}
+                                       className="form-control" placeholder={this.state.picUrl}/>
+                            </div>
+                            <div className="form-group">
+                                <label className="pr-sm-2">
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        value="M"
+                                        checked={this.state.profileData.gender === "M"}
+                                        onChange={this.handleChange}
+                                    /> Male
+                                </label>
+
+
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        value="F"
+                                        checked={this.state.profileData.gender === "F"}
+                                        onChange={this.handleChange}
+                                    /> Female
+                                </label>
+
+                                <br/>
+                            </div>
+                            <input type="submit" name="submit" onClick={() => this.setState({routeToUserHome: true})}
+                                   className="btn btn-info btn-md"
+                                   value="Go Back"/>
+                            <input type="submit" name="submit" onClick={this.editProfile}
+                                   className="btn btn-info btn-md"
+                                   value="Submit"/>
                         </div>
                     </div>
                 </div>
+            </div>
 
         );
     }
