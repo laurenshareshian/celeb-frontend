@@ -124,69 +124,73 @@ function ProfileForm({userData, handleChange, handleSubmit}) {
                 <h3 className="text-center text-white pt-5">Preferences form</h3>
                 <div className="container">
                     <br/>
-                    <h2>Create your profile:</h2>
+                    <h2>Create your profile</h2>
                     <form onSubmit={handleSubmit}>
-                    <div id="login-row" className="row justify-content-center align-items-center">
-                        <div id="login-column" className="col-md-6">
-                            <div id="login-box" className="col-md-12">
-                                <div className="form-group">
-                                    <input type="text" name="firstName"
-                                           value={userData.firstName} onChange={handleChange}
-                                           className="form-control" placeholder="First Name"/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="lastName"
-                                        value={userData.lastName} onChange={handleChange}
-                                           className="form-control" placeholder="Last Name"/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="age"
-                                        value={userData.age} onChange={handleChange}
-                                           className="form-control" placeholder="Age"/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="celebStatus"
-                                        value={userData.celebStatus} onChange={handleChange}
-                                           className="form-control" placeholder="Celeb Status"/>
-                                </div>
-                                <div className="form-group">
-                                    <input type="text" name="bio"
-                                        value={userData.bio} onChange={handleChange}
-                                           className="form-control" placeholder="Bio"/>
-                                </div>
-                                <div className="form-group">
-                                    <label className="pr-sm-2">
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="M"
-                                            onChange={handleChange}
-                                        /> Male
-                                    </label>
+                        <div id="login-row" className="row justify-content-center align-items-center">
+                            <div id="login-column" className="col-md-6">
+                                <div id="login-box" className="col-md-12">
+                                    <div className="form-group">
+                                        <input type="text" name="firstName"
+                                               value={userData.firstName} onChange={handleChange}
+                                               className="form-control" placeholder="First Name"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" name="lastName"
+                                            value={userData.lastName} onChange={handleChange}
+                                               className="form-control" placeholder="Last Name"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" name="age"
+                                            value={userData.age} onChange={handleChange}
+                                               className="form-control" placeholder="Age"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" name="celebStatus"
+                                            value={userData.celebStatus} onChange={handleChange}
+                                               className="form-control" placeholder="Celeb Status"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" name="bio"
+                                            value={userData.bio} onChange={handleChange}
+                                               className="form-control" placeholder="Bio"/>
+                                    </div>
+                                    Enter https://bit.ly/newsuitor if you don't have a photo:
+                                    <div className="form-group">
+                                        <input type="text" name="picUrl"
+                                            value={userData.picUrl} onChange={handleChange}
+                                               className="form-control" placeholder="Pic Url"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="pr-sm-2">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="M"
+                                                onChange={handleChange}
+                                            /> Male
+                                        </label>
 
 
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="gender"
-                                            value="F"
-                                            onChange={handleChange}
-                                        /> Female
-                                    </label>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="F"
+                                                onChange={handleChange}
+                                            /> Female
+                                        </label>
 
-                                    <br/>
+                                        <br/>
+                                    </div>
+                                    <input type="submit"
+                                           className="btn btn-info btn-md"
+                                           value="Submit"/>
                                 </div>
-                                <input type="submit"
-                                       className="btn btn-info btn-md"
-                                       value="Submit"/>
                             </div>
                         </div>
-                    </div>
                     </form>
                 </div>
             </div>
-
-
     )
 }
 
@@ -194,7 +198,7 @@ function PreferencesForm({userData, profileData, handlePreferencesChange, handle
     return (
         <main>
             <form onSubmit={handlePreferencesSubmit}>
-                <div id="login">
+            <div className="container">
                     <h3 className="text-center text-white pt-5">Preferences form</h3>
                     <div className="container">
                         <br/>

@@ -54,11 +54,11 @@ class Login extends Component {
             />)
         }
         return (
-            <div id="login">
+            <div className="container">
                 <h3 className="text-center text-white pt-5">Login form</h3>
                 <div className="container">
                     <br/>
-                    Type in admin/admin:
+                    Type in leo@gmail.com/leo to poke around or create a new account!
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">
@@ -70,10 +70,14 @@ class Login extends Component {
                                     <input type="password" name="password" onChange={this.handleChange}
                                            className="form-control" placeholder="password"/>
                                 </div>
-                                <input type="submit" name="submit" onClick={this.login} className="btn btn-info btn-md"
+                                <label className="pr-sm-2">
+                                    <input type="submit" name="submit" onClick={this.login} className="btn btn-info btn-md"
                                        value="Login"/>
+                                </label>
+                                <label className="pr-sm-2">
                                 <input type="submit" name="clickedSignUp" onClick={this.handleChange} className="btn btn-info btn-md"
                                        value="Sign up"/>
+                                </label>
                             </div>
                         </div>
                     </div>

@@ -25,7 +25,7 @@ function ListRelationship({selectedRelationship, userData}) {
 function PresentOptions({userData, handleClick}) {
 
     return (
-        <div>
+        <div class="content">
             <MemberInfo userData={userData}/>
             <br/>
 

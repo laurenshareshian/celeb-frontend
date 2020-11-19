@@ -3,24 +3,36 @@
 }
 
 .Header {
-  background-color: rgba(169, 67, 63, 0.71);
-  height: 150px;
-  padding: 55px;
-  color: cornsilk;
+  background-color: #D4418E;
+  height: 130px;
+  color: white;
 }
 
 .Footer {
-  background-color: rgba(169, 67, 63, 0.71);
+  background-color: #D4418E;
   height: 50px;
   padding: 15px;
-  color: cornsilk;
+  color: white;
   position:absolute;
   left:0;
   bottom:0;
   right:0;
 }
 
+.btn-info {
+  background-color: #7F5A83 !important;
+  border-color: white !important;
+}
+
  a, a:hover, a:focus, a:active {
       text-decoration: none !important;
-      color: cornsilk !important;
+      color: white !important;
+ }
+
+ .content {
+    padding-top:8%;
+ }
+
+img {
+ width: 130px !important;
  }

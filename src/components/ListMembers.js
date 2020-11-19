@@ -62,30 +62,28 @@ function MemberTable({title, handleClick, userId}) {
     }
 
     const columns = [{
-        Header: 'Compatible First Name',
         accessor: 'firstName',
         editable: false
     }, {
-        Header: 'Compatible Last name',
         accessor: 'lastName',
         editable: false
     }, {
         sortable: false,
         filterable: false,
-        width: 100,
+        width: 120,
         Cell: row => {
             let member = row.original;
             return (
                 <div>
-                    <button onClick={handleClick(member)}>View Profile</button>
+                    <button className="btn btn-info btn-md" onClick={handleClick(member)}>View Profile</button>
                 </div>
             )
         }
     }];
     return (
-        <div>
-            <h1>{title}</h1>
-            <ReactTable data={members} columns={columns} filterable={true}/>
+        <div className="container">
+            <h2>{title}</h2>
+            <ReactTable data={members} columns={columns} pageSize={8}/>
         </div>
     );
 }

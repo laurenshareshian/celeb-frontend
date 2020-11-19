@@ -47,11 +47,9 @@ class Profile extends Component {
             return <UserHome userData={this.props.profileData}/>
         }
         return (
-            <div id="login">
-                <h3 className="text-center text-white pt-5">Preferences form</h3>
                 <div className="container">
                     <br/>
-                    <h1>Update your profile:</h1>
+                    <h2>Update your profile:</h2>
                     <div id="login-row" className="row justify-content-center align-items-center">
                         <div id="login-column" className="col-md-6">
                             <div id="login-box" className="col-md-12">
@@ -74,6 +72,10 @@ class Profile extends Component {
                                 <div className="form-group">
                                     <input type="text" name="bio" onChange={this.handleChange}
                                            className="form-control" placeholder={this.state.bio}/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="picUrl" onChange={this.handleChange}
+                                           className="form-control" placeholder={this.state.picUrl}/>
                                 </div>
                                 <div className="form-group">
                                     <label className="pr-sm-2">
@@ -109,7 +111,6 @@ class Profile extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
 
         );
     }
