@@ -23,6 +23,7 @@ class Profile extends Component {
             age: profileData.age,
             celebStatus: profileData.celebStatus,
             bio: profileData.bio,
+            picUrl: profileData.picUrl,
             fkEmailId: profileData.emailId || profileData.fkEmailId
         };
         fetch(this.host + "/api/profile/update-profiles/" + preferences.profileId, {
@@ -80,7 +81,7 @@ class Profile extends Component {
                             </div>
                             <div className="form-group">
                                 <input type="text" name="picUrl" onChange={this.handleChange}
-                                       className="form-control" placeholder={this.state.picUrl}/>
+                                       className="form-control" placeholder={this.state.profileData.picUrl}/>
                             </div>
                             <div className="form-group">
                                 <label className="pr-sm-2">

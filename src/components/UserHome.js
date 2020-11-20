@@ -5,7 +5,7 @@ import Preferences from './Preferences';
 import Profile from './Profile';
 import {Relationships} from "../Constants";
 import ListMembers from "./ListMembers";
-
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 class UserHome extends Component {
@@ -70,11 +70,15 @@ function PresentOptions({userData, handleClick}) {
     return (
         <div className="content">
             <h1>Welcome back, {userData.firstName}!</h1>
+            <Container>
+            <Row>
+            <Col>
             <MemberInfo userData={userData}/>
+            </Col>
             <p/>
-
+            <Col>
             <button
-                className="btn btn-info btn-md"
+                className="btn btn-info btn-md userhome"
                 name="Profile"
                 onClick={handleClick}>
                 Manage Profile
@@ -83,7 +87,7 @@ function PresentOptions({userData, handleClick}) {
             <p/>
 
             <button
-                className="btn btn-info btn-md"
+                className="btn btn-info btn-md userhome"
                 name="Preferences"
                 onClick={handleClick}>
                 Manage Dating Preferences
@@ -92,7 +96,7 @@ function PresentOptions({userData, handleClick}) {
             <p/>
 
             <button
-                className="btn btn-info btn-md"
+                className="btn btn-info btn-md userhome"
                 name={Relationships.COMPATIBLES.NAME}
                 onClick={handleClick}>
                 View Compatible Users
@@ -101,7 +105,7 @@ function PresentOptions({userData, handleClick}) {
             <p/>
 
             <button
-                className="btn btn-info btn-md"
+                className="btn btn-info btn-md userhome"
                 name={Relationships.ADMIRERS.NAME}
                 onClick={handleClick}>
                 View Admirers
@@ -110,12 +114,16 @@ function PresentOptions({userData, handleClick}) {
             <p/>
 
             <button
-                className="btn btn-info btn-md"
+                className="btn btn-info btn-md userhome"
                 name={Relationships.MATCHES.NAME}
                 onClick={handleClick}>
                 View Matches
             </button>
+        </Col>
+        </Row>
+        </Container>
         </div>
+
     )
 }
 export default UserHome
