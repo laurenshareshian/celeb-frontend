@@ -70,7 +70,7 @@ class SignUp extends Component {
             ageMax: this.state.preferencesData.ageMax,
             gender: this.state.preferencesData.gender,
             fkProfileId: this.state.profileData.fkEmailId
-        }
+        };
         newPreferences(savedPreferencesData)
             .then(userData => {
                 this.setState({
@@ -91,7 +91,6 @@ class SignUp extends Component {
                         handleSubmit={this.handleSubmit.bind(this)}
                     />
         } else if (!goToPreferences) {
-            console.log("We did it!")
             return <PreferencesForm userData={preferencesData}
                         profileData = {profileData}
                         handlePreferencesChange={this.handlePreferencesChange.bind(this)}
