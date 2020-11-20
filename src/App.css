@@ -24,15 +24,23 @@
   border-color: white !important;
 }
 
+.userhome {
+  width: 80% !important;
+}
  a, a:hover, a:focus, a:active {
       text-decoration: none !important;
       color: white !important;
  }
 
  .content {
-    padding-top:8%;
+    padding-top:5%;
  }
 
 img {
  width: 130px !important;
+ }
+
+ .row {
+    padding-top: 2%;
+    align-items: center;
  }
