@@ -7,7 +7,13 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.host = baseUrl;
-        this.state = {email: '', password: '', userData: {}, loggedIn: false};
+        this.state = {
+            email: '',
+            password: '',
+            userData: {},
+            error: {hasOccurred: false, message: "", count: 0},
+            loggedIn: false
+        };
     }
 
     login = () => {
@@ -17,14 +23,55 @@ class Login extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(user)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error!")
+                }
+                console.log("response: ", response);
+                return response.json();
+            })
             .then(jsonResponse => {
+                console.log("jsonResponse: ", jsonResponse);
                 this.setState({
                     userData: jsonResponse,
                     loggedIn: true
-                })
+                });
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                let getOrd = n => {
+                    if (10 < n && n < 20) {
+                        return " " + n + "th";
+                    }
+                    let d = n % 10;
+                    switch (d) {
+                        case 1:
+                            return " " + n + "st";
+                        case 2:
+                            return " " + n + "nd";
+                        case 3:
+                            return " " + n + "rd";
+                        default:
+                            return " " + n + "th";
+                    }
+                };
+
+                let getMessage = count => {
+                    let countMessage = ""
+                    if (count > 1) {
+                        countMessage = getOrd(count);
+                    }
+                    return "A" + countMessage + " log in error has occurred." +
+                        " Please, try again or sign up with a new account.";
+                };
+                this.setState(prev => (
+                    {
+                        error: {
+                            hasOccurred: true,
+                            message: getMessage(prev.error.count + 1),
+                            count: prev.error.count + 1
+                        }
+                    }));
+            });
     };
 
     handleChange = (event) => {
@@ -71,13 +118,16 @@ class Login extends Component {
                                            className="form-control" placeholder="password"/>
                                 </div>
                                 <label className="pr-sm-2">
-                                    <input type="submit" name="submit" onClick={this.login} className="btn btn-info btn-md"
-                                       value="Login"/>
+                                    <input type="submit" name="submit" onClick={this.login}
+                                           className="btn btn-info btn-md"
+                                           value="Login"/>
                                 </label>
                                 <label className="pr-sm-2">
-                                <input type="submit" name="clickedSignUp" onClick={this.handleChange} className="btn btn-info btn-md"
-                                       value="Sign up"/>
+                                    <input type="submit" name="clickedSignUp" onClick={this.handleChange}
+                                           className="btn btn-info btn-md"
+                                           value="Sign up"/>
                                 </label>
+                                {this.state.error.hasOccurred ? this.displayMessage(this.state.error.message) : null}
                             </div>
                         </div>
                     </div>
@@ -85,6 +135,10 @@ class Login extends Component {
             </div>
 
         );
+    }
+
+    displayMessage(message) {
+        return <label>{message}</label>;
     }
 }
 
