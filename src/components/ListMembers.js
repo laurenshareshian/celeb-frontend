@@ -30,7 +30,7 @@ class ListMembers extends Component {
         const selectedRelationship = this.selectedRelationship;
         const userData = this.userData;
         if (selectedMember !== null) {
-            return <ViewMember selectedMember={selectedMember} userData={userData} selectedRelationship={selectedRelationship} goBack={this.goBack.bind(this)}/>
+            return <ViewMember selectedMember={selectedMember} userData={userData} selectedRelationship={selectedRelationship}/>//goBack={this.goBack.bind(this)}/>
         }
         return <MemberTable title={selectedRelationship} handleClick={this.viewProfile}
                             userId={userData.profileId}/>

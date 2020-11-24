@@ -4,13 +4,20 @@ import {newUser, newPreferences} from "../Constants";
 import RegisterAccount from "../components/RegisterAccount";
 //import Preferences from "../components/Preferences";
 import {Redirect} from "react-router-dom";
+import Login from "./Login";
+
+const RegisterComponents = {
+    ACCOUNT: "account",
+    PROFILE: "profile",
+    PREFERENCES: "preferences",
+    LOGIN: "login"
+};
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goToLogIn: false,
-            goToPreferences: false,
+            componentToRender: RegisterComponents.ACCOUNT,
             userData: {},
             profileData: {
                 firstName: '',
@@ -19,6 +26,7 @@ class SignUp extends Component {
                 age: '',
                 celebStatus: '',
                 bio: '',
+                picUrl: '',
                 fkEmailId: -1
             },
             preferencesData: {
@@ -36,7 +44,7 @@ class SignUp extends Component {
         this.setState(prevState => ({
             profileData: {
                 ...prevState.profileData,
-                    [name]: val
+                [name]: val
             }
         }))
     };
@@ -47,20 +55,35 @@ class SignUp extends Component {
         this.setState(prevState => ({
             preferencesData: {
                 ...prevState.preferencesData,
-                    [name]: val
+                [name]: val
             }
         }))
     };
 
-    handleSubmit = (event) => {
+    setEmailId = (emailId) => {
+        this.setState(prevState => ({
+            componentToRender: RegisterComponents.PROFILE,
+            profileData: {
+                ...prevState.profileData,
+                fkEmailId: emailId
+            }
+        }))
+    }
+
+    handleProfileSubmit = (event) => {
         event.preventDefault();
+        console.log("I'm here and 'this' = ", this);
         newUser(this.state.profileData)
             .then(userData => {
-                this.setState({
+                console.log("userData: ", userData);
+                this.setState(prevState => ({
+                    ...prevState,
                     userData: userData,
-                    goToLogIn: true
-                })
-            });
+                    componentToRender: RegisterComponents.PREFERENCES
+                }))
+            }).then(() => {
+            console.log("I'm here and 'this' = ", this);
+        });
     };
 
     handlePreferencesSubmit = (event) => {
@@ -75,121 +98,109 @@ class SignUp extends Component {
             .then(userData => {
                 this.setState({
                     userData: userData,
-                    goToPreferences: true
+                    componentToRender: RegisterComponents.LOGIN
                 })
             });
     };
 
     render() {
-        const {goToLogIn, goToPreferences, profileData, preferencesData} = this.state;
-        if (profileData.fkEmailId === -1) {
+        const {componentToRender, profileData, preferencesData} = this.state;
+        console.log("this.state", this.state)
+        if (componentToRender === RegisterComponents.ACCOUNT) {
             return <RegisterAccount setEmailId={this.setEmailId.bind(this)}/>
-        } else if (!goToLogIn) {
+        } else if (componentToRender === RegisterComponents.PROFILE) {
             return <ProfileForm
-                        userData={profileData}
-                        handleChange={this.handleChange.bind(this)}
-                        handleSubmit={this.handleSubmit.bind(this)}
-                    />
-        } else if (!goToPreferences) {
-            return <PreferencesForm userData={preferencesData}
-                        profileData = {profileData}
-                        handlePreferencesChange={this.handlePreferencesChange.bind(this)}
-                        handlePreferencesSubmit={this.handlePreferencesSubmit.bind(this)}
-                        />
+                userData={profileData}
+                handleChange={this.handleChange.bind(this)}
+                handleSubmit={this.handleProfileSubmit.bind(this)}
+            />
+        } else if (componentToRender === RegisterComponents.PREFERENCES) {
+            return <PreferencesForm
+                userData={preferencesData}
+                profileData={profileData}
+                handlePreferencesChange={this.handlePreferencesChange.bind(this)}
+                handlePreferencesSubmit={this.handlePreferencesSubmit.bind(this)}
+            />
         } else {
-                return (<Redirect
-                    push
-                    to={{
-                        pathname: '/',
-                    }}
-                />)
+            return (<Login/>)
         }
-    }
-
-    setEmailId = (emailId) => {
-        this.setState(prevState => ({
-            profileData: {
-                ...prevState.profileData,
-                fkEmailId: emailId
-            }
-        }))
     }
 
 }
 
 function ProfileForm({userData, handleChange, handleSubmit}) {
     return (
-            <div id="login">
-                <h3 className="text-center text-white pt-5">Preferences form</h3>
-                <div className="container">
-                    <br/>
-                    <h2>Create your profile</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div id="login-row" className="row justify-content-center align-items-center">
-                            <div id="login-column" className="col-md-6">
-                                <div id="login-box" className="col-md-12">
-                                    <div className="form-group">
-                                        <input type="text" name="firstName"
-                                               value={userData.firstName} onChange={handleChange}
-                                               className="form-control" placeholder="First Name"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" name="lastName"
-                                            value={userData.lastName} onChange={handleChange}
-                                               className="form-control" placeholder="Last Name"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" name="age"
-                                            value={userData.age} onChange={handleChange}
-                                               className="form-control" placeholder="Age"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" name="celebStatus"
-                                            value={userData.celebStatus} onChange={handleChange}
-                                               className="form-control" placeholder="Celeb Status"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" name="bio"
-                                            value={userData.bio} onChange={handleChange}
-                                               className="form-control" placeholder="Bio"/>
-                                    </div>
-                                    Enter https://bit.ly/newsuitor if you don't have a photo:
-                                    <div className="form-group">
-                                        <input type="text" name="picUrl"
-                                            value={userData.picUrl} onChange={handleChange}
-                                               className="form-control" placeholder="Pic Url"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="pr-sm-2">
-                                            <input
-                                                type="radio"
-                                                name="gender"
-                                                value="M"
-                                                onChange={handleChange}
-                                            /> Male
-                                        </label>
-
-
-                                        <label>
-                                            <input
-                                                type="radio"
-                                                name="gender"
-                                                value="F"
-                                                onChange={handleChange}
-                                            /> Female
-                                        </label>
-
-                                        <br/>
-                                    </div>
-                                    <input type="submit"
-                                           className="btn btn-info btn-md"
-                                           value="Submit"/>
+        <div id="login">
+            <h3 className="text-center text-white pt-5">Preferences form</h3>
+            <div className="container">
+                <br/>
+                <h2>Create your profile</h2>
+                <form onSubmit={handleSubmit}>
+                    <div id="login-row" className="row justify-content-center align-items-center">
+                        <div id="login-column" className="col-md-6">
+                            <div id="login-box" className="col-md-12">
+                                <div className="form-group">
+                                    <input type="text" name="firstName"
+                                           value={userData.firstName} onChange={handleChange}
+                                           className="form-control" placeholder="First Name"/>
                                 </div>
+                                <div className="form-group">
+                                    <input type="text" name="lastName"
+                                           value={userData.lastName} onChange={handleChange}
+                                           className="form-control" placeholder="Last Name"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="age"
+                                           value={userData.age} onChange={handleChange}
+                                           className="form-control" placeholder="Age"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="celebStatus"
+                                           value={userData.celebStatus} onChange={handleChange}
+                                           className="form-control" placeholder="Celeb Status"/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="text" name="bio"
+                                           value={userData.bio} onChange={handleChange}
+                                           className="form-control" placeholder="Bio"/>
+                                </div>
+                                Enter https://bit.ly/newsuitor if you don't have a photo:
+                                <div className="form-group">
+                                    <input type="text" name="picUrl"
+                                           value={userData.picUrl} onChange={handleChange}
+                                           className="form-control" placeholder="Pic Url"/>
+                                </div>
+                                <div className="form-group">
+                                    <label className="pr-sm-2">
+                                        <input
+                                            type="radio"
+                                            name="gender"
+                                            value="M"
+                                            onChange={handleChange}
+                                        /> Male
+                                    </label>
+
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="gender"
+                                            value="F"
+                                            onChange={handleChange}
+                                        /> Female
+                                    </label>
+
+                                    <br/>
+                                </div>
+                                <input type="submit"
+                                       className="btn btn-info btn-md"
+                                       value="Submit"/>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
+        </div>
     )
 }
 
@@ -197,7 +208,7 @@ function PreferencesForm({userData, profileData, handlePreferencesChange, handle
     return (
         <main>
             <form onSubmit={handlePreferencesSubmit}>
-            <div className="container">
+                <div className="container">
                     <h3 className="text-center text-white pt-5">Preferences form</h3>
                     <div className="container">
                         <br/>
@@ -247,4 +258,5 @@ function PreferencesForm({userData, profileData, handlePreferencesChange, handle
         </main>
     )
 }
+
 export default SignUp

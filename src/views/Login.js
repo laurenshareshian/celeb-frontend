@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import {baseUrl} from "../Constants";
+import UserHome from "../components/UserHome";
+import SignUp from "./SignUp";
 
 class Login extends Component {
     constructor(props) {
@@ -83,22 +85,9 @@ class Login extends Component {
         if (loggedIn) {
             const data = this.state.userData;
             console.log('here data', data);
-            return (<Redirect
-                push
-                to={{
-                    pathname: '/user',
-                    state: {
-                        userData: data
-                    }
-                }}
-            />)
+            return (<UserHome userData={data} />)
         } else if (clickedSignUp) {
-            return (<Redirect
-                push
-                to={{
-                    pathname: '/SignUp'
-                }}
-            />)
+            return (<SignUp/>)
         }
         return (
             <div className="container">
