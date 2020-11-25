@@ -6,9 +6,8 @@ class LoveNote extends Component {
         super(props)
         this.userId = props.userId;
         this.memberId = props.memberId;
-        this.cancel = props.cancel;
         this.state = {
-            routeToUserHome: false,
+            shouldOpen: false,
             loveNote: ''
         }
     }
@@ -19,17 +18,13 @@ class LoveNote extends Component {
 
     sendIt = () => {
         sendMessage(this.userId, this.memberId, this.state.loveNote)
-            .then(() => this.setState({routeToUserHome: true}))
+            .then(() => this.setState({shouldOpen: false}))
     }
 
     render() {
-        const {routeToUserHome} = this.state;
-        if (routeToUserHome) {
-            console.log("Go Home")
-            this.cancel();
-        }
-        return (
-            <div>
+        if (this.state.shouldOpen) {
+            return (
+                <div>
                 <textarea
                     name="loveNote"
                     value={this.state.loveNote}
@@ -37,13 +32,22 @@ class LoveNote extends Component {
                     placeholder="Send a love note with your deets"
                     required
                 />
-                <br/>
-                <input type="submit" name="submit" onClick={this.cancel} className="btn btn-info btn-md"
-                       value="cancel"/>
-                <input type="submit" name="submit" onClick={this.sendIt} className="btn btn-info btn-md"
-                       value="Send It"/>
-            </div>
-        )
+                    <br/>
+                    <input type="submit" name="submit" onClick={() => this.setState({shouldOpen: false})} className="btn btn-info btn-md"
+                           value="cancel"/>
+                    <input type="submit" name="submit" onClick={this.sendIt} className="btn btn-info btn-md"
+                           value="Send It"/>
+                </div>
+            )
+        } else {
+            return (
+                <button
+                    className="btn btn-info btn-md"
+                    onClick={() => this.setState({shouldOpen: true})}>
+                    Send a message
+                </button>
+            )
+        }
     }
 }
 
