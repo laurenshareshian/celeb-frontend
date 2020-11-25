@@ -30,7 +30,7 @@ class ListMembers extends Component {
         const selectedRelationship = this.selectedRelationship;
         const userData = this.userData;
         if (selectedMember !== null) {
-            return <ViewMember selectedMember={selectedMember} userData={userData} selectedRelationship={selectedRelationship}/>//goBack={this.goBack.bind(this)}/>
+            return <ViewTheMember selectedMember={selectedMember} userData={userData} selectedRelationship={selectedRelationship}/>//goBack={this.goBack.bind(this)}/>
         }
         return <MemberTable title={selectedRelationship} handleClick={this.viewProfile}
                             userId={userData.profileId}/>
@@ -43,6 +43,24 @@ class ListMembers extends Component {
     }
 
 
+}
+
+function ViewTheMember({selectedMember, userData, selectedRelationship}) {
+    const {data, error} = useRequest('/api/profile/get-admirers', selectedMember.profileId);
+    if (error) {
+        return <div>Error</div>
+    }
+    if (!data) {
+        return <div>loading...</div>
+    }
+    let userLikesMember = data.filter(admirer => admirer.profileId === userData.profileId).length > 0;
+    console.log("UserLikesMember?: ", userLikesMember);
+    return <ViewMember
+        selectedMember={selectedMember}
+        userData={userData}
+        selectedRelationship={selectedRelationship}
+        userLikesMember={userLikesMember}
+    />;
 }
 
 function MemberTable({title, handleClick, userId}) {

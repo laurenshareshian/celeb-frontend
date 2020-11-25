@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import SuitorInfo from "./SuitorInfo"
 import {Relationships, setLike, setDislike, useRequest} from "../Constants";
 import LoveNote from './LoveNote'
@@ -8,13 +8,12 @@ import ListMembers from "./ListMembers";
 class ViewMember extends Component {
     constructor(props) {
         super(props);
-        const {selectedMember, userData, selectedRelationship, goBack} = props;
+        const {selectedMember, userData, selectedRelationship, userLikesMember} = props;
         this.selectedMember = selectedMember;
         this.userData = userData;
         this.selectedRelationship = selectedRelationship;
-        this.goBack = goBack;
         this.state = {
-            count: 0,
+            userLikesMember: userLikesMember,
             goBack: false,
         }
     }
@@ -29,12 +28,17 @@ class ViewMember extends Component {
             <div>
                 <SuitorInfo userData={this.selectedMember}/>
                 <p/>
-                <LikeButton source={this.userData} target={this.selectedMember} update={() => this.setState(prev => ({count: prev.count + 1}))}/>
+                <LikeButton
+                    source={this.userData}
+                    target={this.selectedMember}
+                    setUserLikesMember={this.setUserLikesMember.bind(this)}
+                    userLikes={this.state.userLikesMember}/>
                 <p/>
                 {this.displayingMatches() ?
                     <LoveNote userId={userId} memberId={memberId}/> : null}
                 <p/>
-                <DisplayAction message={"Back to " + this.selectedRelationship} onClick={() => this.setState({goBack: true})}/>
+                <DisplayAction message={"Back to " + this.selectedRelationship}
+                               onClick={() => this.setState({goBack: true})}/>
             </div>
         )
     }
@@ -42,6 +46,14 @@ class ViewMember extends Component {
 
     displayingMatches() {
         return this.selectedRelationship === Relationships.MATCHES.NAME;
+    }
+
+    setUserLikesMember = bool => res => {
+        let type = bool ? "like" : "unlike";
+        console.log("response to " + type + " event: ", res);
+        this.setState({
+            userLikesMember: bool,
+        })
     }
 }
 
@@ -56,36 +68,22 @@ function DisplayAction({message, onClick}) {
     )
 }
 
-function LikeButton({source, target, update}) {
-    const {data, error} = useRequest('/api/profile/get-admirers', target.profileId);
-    if (error) {
-        return <div>Yikes</div>
-    }
-    if (!data) {
-        return <div>loading...</div>
-    }
-
-    let userLikesMember = data.filter(admirer => admirer.profileId === source.profileId).length > 0;
-    if (userLikesMember) {
+function LikeButton({source, target, setUserLikesMember, userLikes}) {
+    if (userLikes) {
         return <DisplayAction
             message={"Click to Unlike"}
             onClick={
-                () => setDislike(source.profileId, target.profileId).then(update)
+                () => setDislike(source.profileId, target.profileId).then(setUserLikesMember(false))
             }
         />
     } else {
         return <DisplayAction
             message={"Click to like"}
             onClick={
-                () => setLike(source.profileId, target.profileId).then(update)
+                () => setLike(source.profileId, target.profileId).then(setUserLikesMember(true))
             }
         />
     }
-}
-
-function useForceUpdate() {
-    let [value, setValue] = useState(0);
-    return () => setValue(value => ++value);
 }
 
 
