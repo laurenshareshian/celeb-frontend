@@ -63,31 +63,51 @@ function ViewTheMember({selectedMember, userData, selectedRelationship}) {
     />;
 }
 
+function CombineProfileWithMessage (members, messages)  {
+    if (members && messages) {
+        members.forEach((member) => {
+            member.messageToDreamProfile = "";
+            messages.forEach((message) => {
+                if (member.profileId == message.fkProfileId)
+                    member.messageToDreamProfile = message.messageToDreamProfile;
+            });
+        });
+    }
+    return members;
+}
+
 function MemberTable({title, handleClick, userId}) {
     let data = {
         compatibles: useRequest(Relationships.COMPATIBLES.PATH, userId).data,
         admirers: useRequest(Relationships.ADMIRERS.PATH, userId).data,
         matches: useRequest(Relationships.MATCHES.PATH, userId).data,
+        messages: useRequest('/api/matches/get-messages', userId).data
     };
+    console.log("messages", data.messages);
+    console.log("matches", data.matches);
+
     let members;
+    let messages;
     if (title === Relationships.COMPATIBLES.NAME) {
         members = data.compatibles;
     } else if (title === Relationships.ADMIRERS.NAME) {
-        members = data.admirers;
+        members = CombineProfileWithMessage(data.admirers, data.messages);
     } else {
-        members = data.matches;
+        members = CombineProfileWithMessage(data.matches, data.messages);
     }
 
-    const columns = [{
+    let columns = [{
+        Header: 'First Name',
         accessor: 'firstName',
         editable: false
     }, {
+        Header: 'Last Name',
         accessor: 'lastName',
         editable: false
-    }, {
+    },
+    {
         sortable: false,
         filterable: false,
-        width: 120,
         Cell: row => {
             let member = row.original;
             return (
@@ -97,6 +117,16 @@ function MemberTable({title, handleClick, userId}) {
             )
         }
     }];
+    if (columns && title !== Relationships.COMPATIBLES.NAME) {
+        columns.splice(2, 0,
+            {
+                 Header: 'Personal Message',
+                 accessor: 'messageToDreamProfile',
+                 minWidth: 300,
+                 editable: false
+             }
+        );
+    };
     return (
         <div className="container">
             <h2>{title}</h2>

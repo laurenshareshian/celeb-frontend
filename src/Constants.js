@@ -1,10 +1,11 @@
 import useSwr from 'swr'
 
 export const baseUrl = 'https://intense-refuge-49089.herokuapp.com';
-// export const baseUrl = 'http://localhost:8080';
+//export const baseUrl = 'http://localhost:8080';
 const likePath = '/api/matches/create-matches';
 const dislikePath = '/api/matches/unlike';
 const registerAccountPath = '/api/login/create-logins';
+const sendMessagePath = '/api/matches/send-message';
 
 export const useRequest = (path, identifier) => {
     if (!path) {
@@ -37,19 +38,16 @@ export const setDislike = (userId, memberId) => {
 };
 
 export const sendMessage = (userId, memberId, message) => {
-    const likeEvent = {fkProfileId: userId, fkDreamProfileId: memberId, messageToDreamProfile: message};
-    console.log("Sending in Constants.sendMessage: ", JSON.stringify(likeEvent));
-    return fetch(baseUrl + likePath,{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(likeEvent)
+    console.log("SENDING");
+    const identifiers = "/" + userId + "/" + memberId + "/" + message;
+    return fetch(baseUrl + sendMessagePath + identifiers, {
+        method: 'Put',
+        headers: {'Content-Type': 'application/json'}
     })
-        //.then(resp => resp.json())
-        .then(response => {
-            console.log("send response", response);
-            return response;
+        .then(resp => {
+            console.log("edit resp: ", resp);
         })
-        .catch(err => console.error("error", err))
+        .catch(err => console.error(err))
 };
 
 export const registerAccount = (email, password) => {
