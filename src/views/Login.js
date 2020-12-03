@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
-import {Redirect} from "react-router-dom";
 import {baseUrl} from "../Constants";
 import UserHome from "../components/UserHome";
 import SignUp from "./SignUp";

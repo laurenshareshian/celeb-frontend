@@ -2,8 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import {newUser, newPreferences} from "../Constants";
 import RegisterAccount from "../components/RegisterAccount";
-//import Preferences from "../components/Preferences";
-import {Redirect} from "react-router-dom";
 import Login from "./Login";
 
 const RegisterComponents = {
